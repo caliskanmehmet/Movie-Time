@@ -28,12 +28,11 @@ struct Movie: Codable, Identifiable {
     let video: Bool?
     let voteAverage: Float?
         
-    func getPosterPath() -> String {
+    func getPosterPath() -> String? {
         if let safePath = posterPath {
             return "https://image.tmdb.org/t/p/w500\(safePath)"
         } else {
-            return "https://i.stack.imgur.com/y9DpT.jpg"
+            return nil
         }
-        
     }
 }

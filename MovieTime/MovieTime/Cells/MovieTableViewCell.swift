@@ -32,24 +32,54 @@ class MovieTableViewCell: UITableViewCell {
     
     func configure(with movie: Movie) {
         titleLabel.text = movie.title
+        self.posterImageView.image = UIImage(named: "placeholder")
         
         if let releaseDate = movie.releaseDate {
-            dateLabel.text = "Release Date: \(releaseDate)"
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd"
+
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd, yyyy"
+            
+            var formattedDate = " - "
+            
+            if let date = dateFormatterGet.date(from: releaseDate) {
+                formattedDate = dateFormatterPrint.string(from: date)
+            }
+            
+            dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(formattedDate)")
         } else {
-            dateLabel.text = "Release Date: - "
+            dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " - ")
         }
         
         
         if let rating = movie.voteAverage {
-            ratingLabel.text = "\(String(format: "%.1f", rating)) / 10"
+            ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(String(format: "%.1f", rating)) / 10")
         } else {
-            ratingLabel.text = " - / 10"
+            ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " - / 10")
         }
         
-        let processor = RoundCornerImageProcessor(cornerRadius: 30)
-        posterImageView.showGradientSkeleton()
-        posterImageView.kf.setImage(with: URL(string: movie.getPosterPath()), options: [.processor(processor)]) { result in
-            self.posterImageView.hideSkeleton()
+        let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
+        posterImageView.showAnimatedSkeleton()
+        
+        if let safeUrl = movie.getPosterPath() {
+            posterImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
+                                                                              .scaleFactor(UIScreen.main.scale),
+                                                                              .cacheOriginalImage]) { [weak self] response in
+                
+                switch response {
+                    case .success(_):
+                        self?.posterImageView.hideSkeleton()
+                    case .failure(let error):
+                        if !error.isTaskCancelled && !error.isNotCurrentTask {
+                            self?.posterImageView.hideSkeleton()
+                            self?.posterImageView.image = UIImage(named: "placeholder")
+                        }
+                    }
+            }
+        } else {
+            posterImageView.hideSkeleton()
+            posterImageView.image = UIImage(named: "placeholder")
         }
         
         titleLabel.hideSkeleton()

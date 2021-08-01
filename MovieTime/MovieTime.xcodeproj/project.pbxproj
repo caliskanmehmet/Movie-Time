@@ -13,11 +13,14 @@
 		6F01760C26B42DD000CC5081 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F01760A26B42DD000CC5081 /* Main.storyboard */; };
 		6F01760E26B42DD100CC5081 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F01760D26B42DD100CC5081 /* Assets.xcassets */; };
 		6F01761126B42DD100CC5081 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F01760F26B42DD100CC5081 /* LaunchScreen.storyboard */; };
+		6F26C8E926B6CA0C00ECDFA9 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F26C8E826B6CA0C00ECDFA9 /* UITableView+Extension.swift */; };
+		6F26C8EC26B6D2FE00ECDFA9 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */; };
 		6FCDAF6D26B43A350096B5EC /* MovieResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF6C26B43A350096B5EC /* MovieResult.swift */; };
 		6FCDAF6F26B43AE00096B5EC /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF6E26B43ADF0096B5EC /* MovieManager.swift */; };
 		6FCDAF7126B443680096B5EC /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */; };
 		6FCDAF7526B444E90096B5EC /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF7326B444E90096B5EC /* MovieTableViewCell.swift */; };
 		6FCDAF7626B444E90096B5EC /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FCDAF7426B444E90096B5EC /* MovieTableViewCell.xib */; };
+		6FED795D26B535560064E38A /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FED795C26B535560064E38A /* UILabel+Extension.swift */; };
 		BC4EA60843C2AFD2B1888461 /* Pods_MovieTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3DE62C5200B55786478E38 /* Pods_MovieTime.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,11 +35,14 @@
 		6F01760D26B42DD100CC5081 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6F01761026B42DD100CC5081 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6F01761226B42DD100CC5081 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6F26C8E826B6CA0C00ECDFA9 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		6FCDAF6C26B43A350096B5EC /* MovieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResult.swift; sourceTree = "<group>"; };
 		6FCDAF6E26B43ADF0096B5EC /* MovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		6FCDAF7326B444E90096B5EC /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		6FCDAF7426B444E90096B5EC /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
+		6FED795C26B535560064E38A /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		8CA35F9084A8CAC23871C629 /* Pods-MovieTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieTime.debug.xcconfig"; path = "Target Support Files/Pods-MovieTime/Pods-MovieTime.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,6 +79,8 @@
 		6F01760326B42DD000CC5081 /* MovieTime */ = {
 			isa = PBXGroup;
 			children = (
+				6F26C8EA26B6D2E500ECDFA9 /* Views */,
+				6FED795B26B535480064E38A /* Extension */,
 				6FCDAF7226B444CC0096B5EC /* Cells */,
 				6FCDAF6B26B4392C0096B5EC /* Model */,
 				6F01760426B42DD000CC5081 /* AppDelegate.swift */,
@@ -85,6 +93,14 @@
 				6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */,
 			);
 			path = MovieTime;
+			sourceTree = "<group>";
+		};
+		6F26C8EA26B6D2E500ECDFA9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6FCDAF6B26B4392C0096B5EC /* Model */ = {
@@ -103,6 +119,15 @@
 				6FCDAF7426B444E90096B5EC /* MovieTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		6FED795B26B535480064E38A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				6FED795C26B535560064E38A /* UILabel+Extension.swift */,
+				6F26C8E826B6CA0C00ECDFA9 /* UITableView+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		CA53828064B1248BCC95E07B /* Frameworks */ = {
@@ -237,8 +262,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FED795D26B535560064E38A /* UILabel+Extension.swift in Sources */,
 				6F01760926B42DD000CC5081 /* PopularViewController.swift in Sources */,
+				6F26C8E926B6CA0C00ECDFA9 /* UITableView+Extension.swift in Sources */,
 				6F01760526B42DD000CC5081 /* AppDelegate.swift in Sources */,
+				6F26C8EC26B6D2FE00ECDFA9 /* SpinnerViewController.swift in Sources */,
 				6FCDAF7526B444E90096B5EC /* MovieTableViewCell.swift in Sources */,
 				6FCDAF6F26B43AE00096B5EC /* MovieManager.swift in Sources */,
 				6FCDAF6D26B43A350096B5EC /* MovieResult.swift in Sources */,

@@ -118,7 +118,7 @@
     </scenes>
     <resources>
         <image name="heart" catalog="system" width="128" height="109"/>
-        <image name="heart.fill" width="13" height="12"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
