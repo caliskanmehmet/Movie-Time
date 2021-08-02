@@ -15,7 +15,7 @@ class FavoritesViewController: UIViewController {
         // Do any additional setup after loading the view.
         print("Favorites")
     }
-    
+
     /*
     // MARK: - Navigation
 

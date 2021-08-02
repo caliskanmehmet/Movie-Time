@@ -79,18 +79,14 @@
 		6F01760326B42DD000CC5081 /* MovieTime */ = {
 			isa = PBXGroup;
 			children = (
+				6F7694F026B7F0A0005D0D39 /* Base */,
 				6F26C8EA26B6D2E500ECDFA9 /* Views */,
 				6FED795B26B535480064E38A /* Extension */,
 				6FCDAF7226B444CC0096B5EC /* Cells */,
 				6FCDAF6B26B4392C0096B5EC /* Model */,
-				6F01760426B42DD000CC5081 /* AppDelegate.swift */,
-				6F01760626B42DD000CC5081 /* SceneDelegate.swift */,
-				6F01760826B42DD000CC5081 /* PopularViewController.swift */,
 				6F01760A26B42DD000CC5081 /* Main.storyboard */,
 				6F01760D26B42DD100CC5081 /* Assets.xcassets */,
 				6F01760F26B42DD100CC5081 /* LaunchScreen.storyboard */,
-				6F01761226B42DD100CC5081 /* Info.plist */,
-				6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */,
 			);
 			path = MovieTime;
 			sourceTree = "<group>";
@@ -99,8 +95,20 @@
 			isa = PBXGroup;
 			children = (
 				6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */,
+				6F01760826B42DD000CC5081 /* PopularViewController.swift */,
+				6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6F7694F026B7F0A0005D0D39 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				6F01760426B42DD000CC5081 /* AppDelegate.swift */,
+				6F01760626B42DD000CC5081 /* SceneDelegate.swift */,
+				6F01761226B42DD100CC5081 /* Info.plist */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		6FCDAF6B26B4392C0096B5EC /* Model */ = {
@@ -159,6 +167,7 @@
 				6F0175FE26B42DD000CC5081 /* Frameworks */,
 				6F0175FF26B42DD000CC5081 /* Resources */,
 				71A00ECBDE0EBB99852EF7A1 /* [CP] Embed Pods Frameworks */,
+				6F53C45826B7F3C800F7E193 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -237,6 +246,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		6F53C45826B7F3C800F7E193 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		71A00ECBDE0EBB99852EF7A1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -420,7 +446,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = MovieTime/Info.plist;
+				INFOPLIST_FILE = MovieTime/Base/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -440,7 +466,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = MovieTime/Info.plist;
+				INFOPLIST_FILE = MovieTime/Base/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -27,7 +27,7 @@ struct Movie: Codable, Identifiable {
     let voteCount: Int?
     let video: Bool?
     let voteAverage: Float?
-        
+
     func getPosterPath() -> String? {
         if let safePath = posterPath {
             return "https://image.tmdb.org/t/p/w500\(safePath)"

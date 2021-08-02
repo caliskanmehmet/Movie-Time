@@ -15,30 +15,30 @@ struct NetworkConstants {
 }
 
 class MovieManager {
-    
+
     static let shared = MovieManager()
     var isFetching = false
-    
+
     func getPopularMovies(pageNumber: Int, completion: @escaping (Result<MovieResult, AFError>) -> Void) {
         isFetching = true
         let parameters: Parameters = ["page": pageNumber]
         let request = AF.request(NetworkConstants.popularMovies, parameters: parameters, encoding: URLEncoding(destination: .queryString))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
+
         request.responseDecodable(of: MovieResult.self, decoder: decoder) { response in
             completion(response.result)
             self.isFetching = false
         }
     }
-    
+
     func searchMovies(pageNumber: Int, query: String, completion: @escaping (Result<MovieResult, AFError>) -> Void) {
         isFetching = true
         let parameters: Parameters = ["page": pageNumber, "query": query]
         let request = AF.request(NetworkConstants.searchMovies, parameters: parameters, encoding: URLEncoding(destination: .queryString))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
+
         request.responseDecodable(of: MovieResult.self, decoder: decoder) { response in
             completion(response.result)
             print(response.result)
