@@ -171,6 +171,14 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         return movieCellId
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // navigationController?.modalPresentationStyle = .fullScreen
+        let detailVC = DetailViewController()
+        detailVC.movie = movies[indexPath.row]
+
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
     // Implement infinite scroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y

@@ -15,6 +15,9 @@
 		6F01761126B42DD100CC5081 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F01760F26B42DD100CC5081 /* LaunchScreen.storyboard */; };
 		6F26C8E926B6CA0C00ECDFA9 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F26C8E826B6CA0C00ECDFA9 /* UITableView+Extension.swift */; };
 		6F26C8EC26B6D2FE00ECDFA9 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */; };
+		6F53C45E26B82E1200F7E193 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F53C45C26B82E1200F7E193 /* DetailViewController.swift */; };
+		6F53C45F26B82E1200F7E193 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F53C45D26B82E1200F7E193 /* DetailViewController.xib */; };
+		6F53C46126B83CD600F7E193 /* GradientFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F53C46026B83CD600F7E193 /* GradientFilter.swift */; };
 		6FCDAF6D26B43A350096B5EC /* MovieResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF6C26B43A350096B5EC /* MovieResult.swift */; };
 		6FCDAF6F26B43AE00096B5EC /* MovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF6E26B43ADF0096B5EC /* MovieManager.swift */; };
 		6FCDAF7126B443680096B5EC /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */; };
@@ -37,6 +40,9 @@
 		6F01761226B42DD100CC5081 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F26C8E826B6CA0C00ECDFA9 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		6F53C45C26B82E1200F7E193 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		6F53C45D26B82E1200F7E193 /* DetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		6F53C46026B83CD600F7E193 /* GradientFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientFilter.swift; sourceTree = "<group>"; };
 		6FCDAF6C26B43A350096B5EC /* MovieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResult.swift; sourceTree = "<group>"; };
 		6FCDAF6E26B43ADF0096B5EC /* MovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManager.swift; sourceTree = "<group>"; };
 		6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -79,14 +85,13 @@
 		6F01760326B42DD000CC5081 /* MovieTime */ = {
 			isa = PBXGroup;
 			children = (
+				6F53C45926B82CD900F7E193 /* Controllers */,
 				6F7694F026B7F0A0005D0D39 /* Base */,
 				6F26C8EA26B6D2E500ECDFA9 /* Views */,
 				6FED795B26B535480064E38A /* Extension */,
 				6FCDAF7226B444CC0096B5EC /* Cells */,
 				6FCDAF6B26B4392C0096B5EC /* Model */,
-				6F01760A26B42DD000CC5081 /* Main.storyboard */,
 				6F01760D26B42DD100CC5081 /* Assets.xcassets */,
-				6F01760F26B42DD100CC5081 /* LaunchScreen.storyboard */,
 			);
 			path = MovieTime;
 			sourceTree = "<group>";
@@ -94,11 +99,22 @@
 		6F26C8EA26B6D2E500ECDFA9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */,
-				6F01760826B42DD000CC5081 /* PopularViewController.swift */,
-				6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */,
+				6F01760A26B42DD000CC5081 /* Main.storyboard */,
+				6F01760F26B42DD100CC5081 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6F53C45926B82CD900F7E193 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6F01760826B42DD000CC5081 /* PopularViewController.swift */,
+				6F26C8EB26B6D2FE00ECDFA9 /* SpinnerViewController.swift */,
+				6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */,
+				6F53C45C26B82E1200F7E193 /* DetailViewController.swift */,
+				6F53C45D26B82E1200F7E193 /* DetailViewController.xib */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		6F7694F026B7F0A0005D0D39 /* Base */ = {
@@ -116,6 +132,7 @@
 			children = (
 				6FCDAF6C26B43A350096B5EC /* MovieResult.swift */,
 				6FCDAF6E26B43ADF0096B5EC /* MovieManager.swift */,
+				6F53C46026B83CD600F7E193 /* GradientFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F53C45F26B82E1200F7E193 /* DetailViewController.xib in Resources */,
 				6F01761126B42DD100CC5081 /* LaunchScreen.storyboard in Resources */,
 				6F01760E26B42DD100CC5081 /* Assets.xcassets in Resources */,
 				6FCDAF7626B444E90096B5EC /* MovieTableViewCell.xib in Resources */,
@@ -288,12 +306,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F53C45E26B82E1200F7E193 /* DetailViewController.swift in Sources */,
 				6FED795D26B535560064E38A /* UILabel+Extension.swift in Sources */,
 				6F01760926B42DD000CC5081 /* PopularViewController.swift in Sources */,
 				6F26C8E926B6CA0C00ECDFA9 /* UITableView+Extension.swift in Sources */,
 				6F01760526B42DD000CC5081 /* AppDelegate.swift in Sources */,
 				6F26C8EC26B6D2FE00ECDFA9 /* SpinnerViewController.swift in Sources */,
 				6FCDAF7526B444E90096B5EC /* MovieTableViewCell.swift in Sources */,
+				6F53C46126B83CD600F7E193 /* GradientFilter.swift in Sources */,
 				6FCDAF6F26B43AE00096B5EC /* MovieManager.swift in Sources */,
 				6FCDAF6D26B43A350096B5EC /* MovieResult.swift in Sources */,
 				6FCDAF7126B443680096B5EC /* FavoritesViewController.swift in Sources */,

@@ -35,4 +35,12 @@ struct Movie: Codable, Identifiable {
             return nil
         }
     }
+    
+    func getBackdropPath() -> String? {
+        if let safePath = backdropPath {
+            return "https://image.tmdb.org/t/p/w500\(safePath)"
+        } else {
+            return nil
+        }
+    }
 }
