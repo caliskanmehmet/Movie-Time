@@ -49,7 +49,11 @@ class PopularViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         getMoviesAndUpdate(pageNumber: pageNumber)
+        getGenres()
+        initializeSearchController()
+    }
 
+    func initializeSearchController() {
         // Initialize search controller
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
@@ -70,6 +74,19 @@ class PopularViewController: UIViewController {
                     self?.movies.append(contentsOf: movies)
                     print("Fetched page \(pageNumber)")
                     self?.pageNumber += 1
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    func getGenres() {
+        GenreManager.shared.getGenres { response in
+            switch response {
+            case .success(let result):
+                if let genres = result.genres {
+                    GenreManager.shared.genres = genres
                 }
             case .failure(let error):
                 print(error)
@@ -172,9 +189,14 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // navigationController?.modalPresentationStyle = .fullScreen
+
         let detailVC = DetailViewController()
-        detailVC.movie = movies[indexPath.row]
+
+        if isFiltering {
+            detailVC.movie = filteredMovies[indexPath.row]
+        } else {
+            detailVC.movie = movies[indexPath.row]
+        }
 
         navigationController?.pushViewController(detailVC, animated: true)
     }

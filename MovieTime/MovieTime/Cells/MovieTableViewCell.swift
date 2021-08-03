@@ -34,29 +34,8 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.text = movie.title
         self.posterImageView.image = UIImage(named: "placeholder")
 
-        if let releaseDate = movie.releaseDate {
-            let dateFormatterGet = DateFormatter()
-            dateFormatterGet.dateFormat = "yyyy-MM-dd"
-
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "MMM dd, yyyy"
-
-            var formattedDate = " - "
-
-            if let date = dateFormatterGet.date(from: releaseDate) {
-                formattedDate = dateFormatterPrint.string(from: date)
-            }
-
-            dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(formattedDate)")
-        } else {
-            dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " - ")
-        }
-
-        if let rating = movie.voteAverage {
-            ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(String(format: "%.1f", rating)) / 10")
-        } else {
-            ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " - / 10")
-        }
+        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10")
 
         let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
         posterImageView.showAnimatedSkeleton()

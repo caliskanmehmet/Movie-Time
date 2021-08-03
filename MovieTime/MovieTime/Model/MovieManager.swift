@@ -12,6 +12,7 @@ struct NetworkConstants {
     // &page=1
     static let popularMovies = "https://api.themoviedb.org/3/movie/popular?api_key=e5cd56963b11843007db1b94312b521a&language=en-US"
     static let searchMovies = "https://api.themoviedb.org/3/search/movie?api_key=e5cd56963b11843007db1b94312b521a&language=en-US"
+    static let genres = "https://api.themoviedb.org/3/genre/movie/list?api_key=e5cd56963b11843007db1b94312b521a"
 }
 
 class MovieManager {

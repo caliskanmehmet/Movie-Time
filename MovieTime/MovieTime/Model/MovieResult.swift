@@ -35,12 +35,39 @@ struct Movie: Codable, Identifiable {
             return nil
         }
     }
-    
+
     func getBackdropPath() -> String? {
         if let safePath = backdropPath {
             return "https://image.tmdb.org/t/p/w500\(safePath)"
         } else {
             return nil
         }
+    }
+
+    func getReleaseDate() -> String {
+        if let safeDate = releaseDate {
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd"
+
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd, yyyy"
+
+            var formattedDate = " - "
+
+            if let date = dateFormatterGet.date(from: safeDate) {
+                formattedDate = dateFormatterPrint.string(from: date)
+                return formattedDate
+            }
+        }
+
+        return " - "
+    }
+
+    func getRating() -> String {
+        if let rating = voteAverage {
+            return String(format: "%.1f", rating)
+        }
+
+        return " - "
     }
 }
