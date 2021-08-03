@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

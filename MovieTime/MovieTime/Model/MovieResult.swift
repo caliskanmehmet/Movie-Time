@@ -30,7 +30,7 @@ struct Movie: Codable, Identifiable {
 
     func getPosterPath() -> String? {
         if let safePath = posterPath {
-            return "https://image.tmdb.org/t/p/w500\(safePath)"
+            return "https://image.tmdb.org/t/p/w342\(safePath)"
         } else {
             return nil
         }
