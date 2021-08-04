@@ -9,19 +9,30 @@ import UIKit
 import Kingfisher
 
 class DetailViewController: UIViewController {
-    var movie: Movie?
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var genreCollectionView: UICollectionView!
+    
+    var movie: Movie?
+    let cellId = "GenreCollectionViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         initializeContent(with: movie)
+        
+        genreCollectionView.dataSource = self
+        genreCollectionView.register(UINib(nibName: cellId, bundle: nil), forCellWithReuseIdentifier: cellId)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        genreCollectionView.flashScrollIndicators()
     }
 
     func initializeContent(with movie: Movie?) {
@@ -78,4 +89,28 @@ class DetailViewController: UIViewController {
             backdropImageView.image = UIImage(named: "placeholder")
         }
     }
+}
+
+extension DetailViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return movie?.genreIds?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? GenreCollectionViewCell
+        if let safeCell = cell {
+            let originalGenreIds = GenreManager.shared.genres
+            
+            if let genre = originalGenreIds?.first(where: {$0.id == movie?.genreIds?[indexPath.row]}) {
+                    safeCell.genreLabel.text = genre.name
+            } else {
+                    safeCell.genreLabel.text = ""
+            }
+            
+            return safeCell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+    
 }
