@@ -15,6 +15,9 @@ struct MovieResult: Codable {
 struct Movie: Codable, Identifiable {
     let posterPath: String?
     let adult: Bool?
+    let budget: Int?
+    let revenue: Int?
+    let runtime: Int?
     let overview: String?
     let releaseDate: String?
     let genreIds: [Int]?

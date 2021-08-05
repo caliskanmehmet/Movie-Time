@@ -13,6 +13,11 @@ class GenreCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.layer.cornerRadius = 12
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
+        self.layer.masksToBounds = true
     }
 
 }
