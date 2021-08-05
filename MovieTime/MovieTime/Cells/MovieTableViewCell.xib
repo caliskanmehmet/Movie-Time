@@ -28,11 +28,20 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.fill" translatesAutoresizingMaskIntoConstraints="NO" id="plj-if-82B">
+                        <rect key="frame" x="320" y="12" width="25" height="25"/>
+                        <color key="tintColor" red="0.85676693920000002" green="0.067820370199999994" blue="0.075979389250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="NqE-cr-h0L"/>
+                            <constraint firstAttribute="width" secondItem="plj-if-82B" secondAttribute="height" multiplier="1:1" id="RXM-8s-uUM"/>
+                            <constraint firstAttribute="width" constant="25" id="ZN7-zb-Qj1"/>
+                        </constraints>
+                    </imageView>
                     <stackView opaque="NO" contentMode="TopLeft" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ypa-Nn-JlT">
-                        <rect key="frame" x="124" y="8" width="217" height="134"/>
+                        <rect key="frame" x="124" y="16" width="217" height="126"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sra-Ai-tAp">
-                                <rect key="frame" x="0.0" y="0.0" width="217" height="61"/>
+                                <rect key="frame" x="0.0" y="0.0" width="217" height="53"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -44,13 +53,13 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChV-bY-AqD">
-                                <rect key="frame" x="0.0" y="77" width="217" height="20.5"/>
+                                <rect key="frame" x="0.0" y="69" width="217" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6s-iW-9xh">
-                                <rect key="frame" x="0.0" y="113.5" width="217" height="20.5"/>
+                                <rect key="frame" x="0.0" y="105.5" width="217" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -67,7 +76,9 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Ypa-Nn-JlT" secondAttribute="trailing" constant="16" id="HpZ-O2-BUP"/>
                     <constraint firstItem="lhd-dc-7BV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="JJN-bo-uRa"/>
-                    <constraint firstItem="Ypa-Nn-JlT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="NeM-mg-Qdy"/>
+                    <constraint firstItem="Ypa-Nn-JlT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="NeM-mg-Qdy"/>
+                    <constraint firstItem="plj-if-82B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="ZQK-3E-1qT"/>
+                    <constraint firstAttribute="trailing" secondItem="plj-if-82B" secondAttribute="trailing" constant="12" id="fYh-LN-Sme"/>
                     <constraint firstAttribute="bottom" secondItem="Ypa-Nn-JlT" secondAttribute="bottom" constant="8" id="fgY-Gx-BSG"/>
                     <constraint firstItem="lhd-dc-7BV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="y10-OY-EwL"/>
                     <constraint firstItem="Ypa-Nn-JlT" firstAttribute="leading" secondItem="lhd-dc-7BV" secondAttribute="trailing" constant="16" id="yTq-Ip-zQa"/>
@@ -79,6 +90,7 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="dateLabel" destination="ChV-bY-AqD" id="5VA-8C-7vf"/>
+                <outlet property="favoriteIcon" destination="plj-if-82B" id="dUq-AG-MZQ"/>
                 <outlet property="posterImageView" destination="lhd-dc-7BV" id="BDe-Av-Q7E"/>
                 <outlet property="ratingLabel" destination="g6s-iW-9xh" id="ZP8-Ps-yAm"/>
                 <outlet property="titleLabel" destination="Sra-Ai-tAp" id="wCh-RS-OVW"/>
@@ -86,4 +98,7 @@
             <point key="canvasLocation" x="-35.507246376811594" y="86.383928571428569"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="heart.fill" width="13" height="12"/>
+    </resources>
 </document>

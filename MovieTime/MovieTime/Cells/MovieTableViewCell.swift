@@ -14,7 +14,8 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-
+    @IBOutlet weak var favoriteIcon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -30,10 +31,16 @@ class MovieTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(with movie: Movie) {
+    func configure(with movie: Movie, favorites: [Int]) {
         titleLabel.text = movie.title
-        self.posterImageView.image = UIImage(named: "placeholder")
-
+        //self.posterImageView.image = UIImage(named: "placeholder")
+        
+        if let safeId = movie.id {
+            if favorites.contains(safeId) {
+                favoriteIcon.isHidden = false
+            }
+        }
+        
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10")
 
@@ -63,6 +70,10 @@ class MovieTableViewCell: UITableViewCell {
         titleLabel.hideSkeleton()
         ratingLabel.hideSkeleton()
         dateLabel.hideSkeleton()
+    }
+    
+    override func prepareForReuse() {
+        favoriteIcon.isHidden = true
     }
 
 }

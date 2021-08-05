@@ -37,14 +37,13 @@ class MovieManager {
 
     func searchMovies(pageNumber: Int, query: String, completion: @escaping (Result<MovieResult, AFError>) -> Void) {
         isFetching = true
-        let parameters: Parameters = ["api_key": pageNumber, "query": query]
+        let parameters: Parameters = ["page": pageNumber, "query": query]
         let request = AF.request(NetworkConstants.searchMovies, parameters: parameters, encoding: URLEncoding(destination: .queryString))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
 
         request.responseDecodable(of: MovieResult.self, decoder: decoder) { response in
             completion(response.result)
-            print(response.result)
             self.isFetching = false
         }
     }
@@ -58,7 +57,7 @@ class MovieManager {
 
         request.responseDecodable(of: Movie.self, decoder: decoder) { response in
             completion(response.result)
-            print(response.result)
+            //print(response.result)
             self.isFetching = false
         }
     }
