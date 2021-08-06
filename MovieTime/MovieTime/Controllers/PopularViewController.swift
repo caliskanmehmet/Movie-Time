@@ -200,6 +200,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let detailVC = DetailViewController()
+        detailVC.favoriteMovies = favoriteMovies
 
         if isFiltering {
             detailVC.movie = filteredMovies[indexPath.row]
@@ -314,6 +315,12 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         }
         
         return UISwipeActionsConfiguration(actions: [])
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        favoriteMovies = UserDefaults.standard.object(forKey: "favorites") as? [Int] ?? [Int]()
+        tableView.reloadData()
     }
 
 }

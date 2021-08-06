@@ -13,10 +13,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="MovieTime" customModuleProvider="target">
             <connections>
                 <outlet property="backdropImageView" destination="3x3-7k-DIK" id="r4c-sH-OO4"/>
-                <outlet property="basicInfoView" destination="LSA-HD-3Bv" id="SlZ-7j-5Wf"/>
+                <outlet property="basicInfoView" destination="LSA-HD-3Bv" id="nzT-U7-suv"/>
                 <outlet property="budgetLabel" destination="RNp-yp-OBi" id="zA0-1e-fIo"/>
                 <outlet property="dateLabel" destination="DXF-WF-Hg0" id="8dg-fb-JuQ"/>
                 <outlet property="genreCollectionView" destination="JA1-Hu-1sy" id="XJP-4j-CG3"/>
+                <outlet property="genreView" destination="ego-tZ-ss2" id="tqV-7g-QrY"/>
                 <outlet property="mainScrollView" destination="EOg-a0-ZZm" id="Zkr-KZ-klz"/>
                 <outlet property="overviewTextView" destination="RNT-se-fgS" id="RoE-mO-6s8"/>
                 <outlet property="overviewView" destination="JVf-Tk-HZC" id="D3L-pt-QbC"/>
@@ -25,6 +26,7 @@
                 <outlet property="releaseYearLabel" destination="hmz-vo-UjL" id="yJC-Q3-XGX"/>
                 <outlet property="runtimeLabel" destination="X0m-4j-vzk" id="uRU-vF-77a"/>
                 <outlet property="titleLabel" destination="OsF-95-i8c" id="maO-6t-PG0"/>
+                <outlet property="topStackView" destination="Kxh-ms-X07" id="sx2-Hf-8r2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

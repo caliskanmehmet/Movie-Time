@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var overviewView: UIView!
+    @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet weak var basicInfoView: UIView!
     @IBOutlet weak var genreCollectionView: UICollectionView! {
         didSet {
@@ -25,11 +26,12 @@ class DetailViewController: UIViewController {
             genreCollectionView.register(UINib(nibName: cellId, bundle: nil), forCellWithReuseIdentifier: cellId)
         }
     }
+    @IBOutlet weak var genreView: UIView!
     @IBOutlet weak var runtimeLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
     
     var movie: Movie?
-    //var detailedMovie: Movie?
+    var favoriteMovies: [Int]?
     let cellId = "GenreCollectionViewCell"
     
     override func viewDidLoad() {
@@ -57,8 +59,6 @@ class DetailViewController: UIViewController {
         }
         
         initializeContent(with: movie)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,7 +68,24 @@ class DetailViewController: UIViewController {
     }
     
     @objc func favoriteTapped() {
-        print("favoriteTapped")
+        guard let safeMovie = movie else { return }
+        
+        if let safeFavMovies = favoriteMovies, let safeId = safeMovie.id {
+            if safeFavMovies.contains(safeId) {
+                // Unfavorite the film
+                
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
+                
+                if let index = safeFavMovies.firstIndex(of: safeId) {
+                    self.favoriteMovies?.remove(at: index)
+                }
+            } else {
+                // Favorite the film
+                
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
+                favoriteMovies?.append(safeId)
+            }
+        }
     }
     
     func minutesToHoursMinutes(minutes : Int) -> (Int, Int) {
@@ -77,6 +94,15 @@ class DetailViewController: UIViewController {
 
     func initializeContent(with movie: Movie?) {
         guard let safeMovie = movie else { return }
+        
+        if let safeFavMovies = favoriteMovies, let safeId = safeMovie.id {
+            if safeFavMovies.contains(safeId) {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
+            } else {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
+            }
+        }
+        
 
         titleLabel.text = safeMovie.title
         releaseYearLabel.adjustsFontSizeToFitWidth = true
@@ -119,6 +145,8 @@ class DetailViewController: UIViewController {
                 switch response {
                 case .success(_):
                     self?.backdropImageView.hideSkeleton()
+                    
+                    // self?.mainScrollView.backgroundColor = self?.backdropImageView.image?.averageColor
                 case .failure(let error):
                     if !error.isTaskCancelled && !error.isNotCurrentTask {
                         self?.backdropImageView.hideSkeleton()
@@ -133,6 +161,11 @@ class DetailViewController: UIViewController {
         
         overviewView.addSeparator(at: .bottom, color: .systemGray)
         overviewView.addSeparator(at: .top, color: .systemGray)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UserDefaults.standard.setValue(self.favoriteMovies, forKey: "favorites")
     }
 }
 
