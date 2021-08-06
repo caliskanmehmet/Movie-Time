@@ -37,7 +37,24 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        fetchMovieDetails()
+        initializeContent(with: movie)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        mainScrollView.flashScrollIndicators()
+        genreCollectionView.flashScrollIndicators()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UserDefaults.standard.setValue(self.favoriteMovies, forKey: "favorites")
+    }
+    
+    private func fetchMovieDetails() {
         runtimeLabel.showGradientSkeleton()
         budgetLabel.showGradientSkeleton()
         
@@ -57,14 +74,64 @@ class DetailViewController: UIViewController {
                 print(error)
             }
         }
-        
-        initializeContent(with: movie)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        mainScrollView.flashScrollIndicators()
-        genreCollectionView.flashScrollIndicators()
+    func initializeContent(with movie: Movie?) {
+        guard let safeMovie = movie else { return }
+        
+        addFavoriteButton(with: safeMovie)
+        setLabelTexts(with: safeMovie)
+        
+        downloadAndSetImage(with: safeMovie.getPosterPath(), imageView: posterImageView)
+        downloadAndSetImage(with: safeMovie.getBackdropPath(), imageView: backdropImageView)
+
+        overviewView.addSeparator(at: .bottom, color: .systemGray)
+        overviewView.addSeparator(at: .top, color: .systemGray)
+    }
+    
+    private func addFavoriteButton(with movie: Movie) {
+        if let safeFavMovies = favoriteMovies, let safeId = movie.id {
+            if safeFavMovies.contains(safeId) {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
+            } else {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
+            }
+        }
+    }
+    
+    private func setLabelTexts(with movie: Movie) {
+        titleLabel.text = movie.title
+        releaseYearLabel.adjustsFontSizeToFitWidth = true
+        releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"
+        overviewTextView.text = movie.overview
+        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10 (\(movie.voteCount ?? 0) votes)")
+    }
+    
+    private func downloadAndSetImage(with urlString: String?, imageView: UIImageView) {
+        imageView.showAnimatedSkeleton()
+        
+        let processor = DownsamplingImageProcessor(size: imageView.frame.size)
+        
+        if let safeUrl = urlString {
+            imageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
+                                                                              .scaleFactor(UIScreen.main.scale),
+                                                                              .cacheOriginalImage]) { response in
+
+                switch response {
+                case .success(_):
+                    imageView.hideSkeleton()
+                case .failure(let error):
+                    if !error.isTaskCancelled && !error.isNotCurrentTask {
+                        imageView.hideSkeleton()
+                        imageView.image = UIImage(named: "placeholder")
+                    }
+                }
+            }
+        } else {
+            imageView.hideSkeleton()
+            imageView.image = UIImage(named: "placeholder")
+        }
     }
     
     @objc func favoriteTapped() {
@@ -88,86 +155,13 @@ class DetailViewController: UIViewController {
         }
     }
     
-    func minutesToHoursMinutes(minutes : Int) -> (Int, Int) {
+    private func minutesToHoursMinutes(minutes : Int) -> (Int, Int) {
       return (minutes / 60, (minutes % 60))
     }
 
-    func initializeContent(with movie: Movie?) {
-        guard let safeMovie = movie else { return }
-        
-        if let safeFavMovies = favoriteMovies, let safeId = safeMovie.id {
-            if safeFavMovies.contains(safeId) {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
-            } else {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
-            }
-        }
-        
-
-        titleLabel.text = safeMovie.title
-        releaseYearLabel.adjustsFontSizeToFitWidth = true
-        releaseYearLabel.text = "\(safeMovie.originalTitle ?? " - ") • \(safeMovie.releaseDate?[0..<4] ?? " - ") • \(safeMovie.originalLanguage ?? " - ")"
-        overviewTextView.text = safeMovie.overview
-
-        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(safeMovie.getReleaseDate())")
-        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(safeMovie.getRating()) / 10 (\(movie?.voteCount ?? 0) votes)")
-
-        var processor = DownsamplingImageProcessor(size: posterImageView.frame.size)
-
-        posterImageView.showAnimatedSkeleton()
-        if let safeUrl = safeMovie.getPosterPath() {
-            posterImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
-                                                                              .scaleFactor(UIScreen.main.scale),
-                                                                              .cacheOriginalImage]) { [weak self] response in
-
-                switch response {
-                case .success(_):
-                    self?.posterImageView.hideSkeleton()
-                case .failure(let error):
-                    if !error.isTaskCancelled && !error.isNotCurrentTask {
-                        self?.posterImageView.hideSkeleton()
-                        self?.posterImageView.image = UIImage(named: "placeholder")
-                    }
-                }
-            }
-        } else {
-            posterImageView.hideSkeleton()
-            posterImageView.image = UIImage(named: "placeholder")
-        }
-
-        processor = DownsamplingImageProcessor(size: backdropImageView.frame.size)
-        backdropImageView.showAnimatedSkeleton()
-        if let safeUrl = safeMovie.getBackdropPath() {
-            backdropImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
-                                                                              .scaleFactor(UIScreen.main.scale),
-                                                                              .cacheOriginalImage]) { [weak self] response in
-
-                switch response {
-                case .success(_):
-                    self?.backdropImageView.hideSkeleton()
-                    
-                    // self?.mainScrollView.backgroundColor = self?.backdropImageView.image?.averageColor
-                case .failure(let error):
-                    if !error.isTaskCancelled && !error.isNotCurrentTask {
-                        self?.backdropImageView.hideSkeleton()
-                        self?.backdropImageView.image = UIImage(named: "placeholder")
-                    }
-                }
-            }
-        } else {
-            backdropImageView.hideSkeleton()
-            backdropImageView.image = UIImage(named: "placeholder")
-        }
-        
-        overviewView.addSeparator(at: .bottom, color: .systemGray)
-        overviewView.addSeparator(at: .top, color: .systemGray)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UserDefaults.standard.setValue(self.favoriteMovies, forKey: "favorites")
-    }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

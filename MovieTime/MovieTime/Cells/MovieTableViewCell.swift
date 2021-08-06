@@ -18,11 +18,6 @@ class MovieTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-
-        titleLabel.showGradientSkeleton()
-        ratingLabel.showGradientSkeleton()
-        dateLabel.showGradientSkeleton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,22 +25,43 @@ class MovieTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    override func prepareForReuse() {
+        favoriteIcon.isHidden = true
+    }
 
     func configure(with movie: Movie, favorites: [Int]) {
-        titleLabel.text = movie.title
-        //self.posterImageView.image = UIImage(named: "placeholder")
-        
+        setLabelTexts(with: movie)
+        setFavoriteIcon(with: movie, favorites: favorites)
+        downloadAndSetPosterImage(with: movie)
+    }
+    
+    private func setFavoriteIcon(with movie: Movie, favorites: [Int]) {
         if let safeId = movie.id {
             if favorites.contains(safeId) {
                 favoriteIcon.isHidden = false
             }
         }
+    }
+    
+    private func setLabelTexts(with movie: Movie) {
+        titleLabel.showGradientSkeleton()
+        ratingLabel.showGradientSkeleton()
+        dateLabel.showGradientSkeleton()
         
+        titleLabel.text = movie.title
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10")
-
-        let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
+        
+        titleLabel.hideSkeleton()
+        ratingLabel.hideSkeleton()
+        dateLabel.hideSkeleton()
+    }
+    
+    private func downloadAndSetPosterImage(with movie: Movie) {
         posterImageView.showAnimatedSkeleton()
+        
+        let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
 
         if let safeUrl = movie.getPosterPath() {
             posterImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
@@ -66,14 +82,7 @@ class MovieTableViewCell: UITableViewCell {
             posterImageView.hideSkeleton()
             posterImageView.image = UIImage(named: "placeholder")
         }
+    }
 
-        titleLabel.hideSkeleton()
-        ratingLabel.hideSkeleton()
-        dateLabel.hideSkeleton()
-    }
-    
-    override func prepareForReuse() {
-        favoriteIcon.isHidden = true
-    }
 
 }
