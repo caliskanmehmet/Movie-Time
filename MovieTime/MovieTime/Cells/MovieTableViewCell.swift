@@ -27,18 +27,28 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         favoriteIcon.isHidden = true
+        posterImageView.showGradientSkeleton()
+        titleLabel.text = ""
+        ratingLabel.text = ""
+        dateLabel.text = ""
     }
+    
+    
 
-    func configure(with movie: Movie, favorites: [Int]) {
+    func configure(with movie: Movie, favorites: [FavoriteMovie]) {
         setLabelTexts(with: movie)
         setFavoriteIcon(with: movie, favorites: favorites)
         downloadAndSetPosterImage(with: movie)
     }
     
-    private func setFavoriteIcon(with movie: Movie, favorites: [Int]) {
+    private func setFavoriteIcon(with movie: Movie, favorites: [FavoriteMovie]) {
         if let safeId = movie.id {
-            if favorites.contains(safeId) {
+            if favorites.contains(where: { movie in
+                movie.id == safeId
+            }) {
                 favoriteIcon.isHidden = false
             }
         }

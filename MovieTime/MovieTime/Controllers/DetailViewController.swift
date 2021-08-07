@@ -31,7 +31,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var budgetLabel: UILabel!
     
     var movie: Movie?
-    var favoriteMovies: [Int]?
+    var favoriteMovies: [FavoriteMovie]?
     let cellId = "GenreCollectionViewCell"
     
     override func viewDidLoad() {
@@ -51,7 +51,7 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        UserDefaults.standard.setValue(self.favoriteMovies, forKey: "favorites")
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey:"favorites")
     }
     
     private func fetchMovieDetails() {
@@ -91,7 +91,9 @@ class DetailViewController: UIViewController {
     
     private func addFavoriteButton(with movie: Movie) {
         if let safeFavMovies = favoriteMovies, let safeId = movie.id {
-            if safeFavMovies.contains(safeId) {
+            if safeFavMovies.contains(where: { movie in
+                movie.id == safeId
+            }) {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
             } else {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
@@ -138,19 +140,21 @@ class DetailViewController: UIViewController {
         guard let safeMovie = movie else { return }
         
         if let safeFavMovies = favoriteMovies, let safeId = safeMovie.id {
-            if safeFavMovies.contains(safeId) {
+            if safeFavMovies.contains(where: { movie in
+                movie.id == safeId
+            }) {
                 // Unfavorite the film
                 
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
                 
-                if let index = safeFavMovies.firstIndex(of: safeId) {
+                if let index = safeFavMovies.firstIndex(where: {$0.id == safeId}) {
                     self.favoriteMovies?.remove(at: index)
                 }
             } else {
                 // Favorite the film
                 
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
-                favoriteMovies?.append(safeId)
+                favoriteMovies?.append(FavoriteMovie(id: safeId, posterPath: safeMovie.getPosterPath()))
             }
         }
     }

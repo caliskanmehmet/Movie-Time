@@ -35,7 +35,7 @@ class PopularViewController: UIViewController {
     var isResponseEmpty = false
     var query = ""
     var oldIndexPaths: [IndexPath]?
-    var favoriteMovies = UserDefaults.standard.object(forKey: "favorites") as? [Int] ?? [Int]()
+    var favoriteMovies: [FavoriteMovie] = []
 
     private var movies: [Movie] = [] {
         didSet {
@@ -48,6 +48,9 @@ class PopularViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if let data = UserDefaults.standard.value(forKey:"favorites") as? Data {
+            favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
+        }
 
         getMoviesAndUpdate(pageNumber: pageNumber)
         getGenres()
@@ -233,20 +236,22 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         let favoriteAction = UIContextualAction(style: .normal, title: "Favorite", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call favorite action
             if self.isFiltering {
-                if let safeId = self.filteredMovies[indexPath.row].id {
-                    self.favoriteMovies.append(safeId)
+                let movie = self.filteredMovies[indexPath.row]
+                if let safeId = movie.id {
+                    self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
                 } else {
                     print("Error during ID fetching")
                 }
             } else {
-                if let safeId = self.movies[indexPath.row].id {
-                    self.favoriteMovies.append(safeId)
+                let movie = self.movies[indexPath.row]
+                if let safeId = movie.id {
+                    self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
                 } else {
                     print("Error during ID fetching")
                 }
             }
-            
-            UserDefaults.standard.setValue(self.favoriteMovies, forKey: "favorites")
+
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey:"favorites")
 
             // Reset state
             success(true)
@@ -259,10 +264,10 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         })
         
         let unfavoriteAction = UIContextualAction(style: .normal, title: "Unfavorite", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            // Call favorite action
+            // Call unfavorite action
             if self.isFiltering {
                 if let safeId = self.filteredMovies[indexPath.row].id {
-                    if let index = self.favoriteMovies.firstIndex(of: safeId) {
+                    if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
                         self.favoriteMovies.remove(at: index)
                     }
                 } else {
@@ -270,7 +275,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
                 }
             } else {
                 if let safeId = self.movies[indexPath.row].id {
-                    if let index = self.favoriteMovies.firstIndex(of: safeId) {
+                    if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
                         self.favoriteMovies.remove(at: index)
                     }
                 } else {
@@ -278,7 +283,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
                 }
             }
             
-            UserDefaults.standard.setValue(self.favoriteMovies, forKey: "favorites")
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey:"favorites")
 
             // Reset state
             success(true)
@@ -298,7 +303,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         
         if isFiltering {
             if let safeId = filteredMovies[indexPath.row].id {
-                if favoriteMovies.contains(safeId) {
+                if favoriteMovies.contains(where: { movie in
+                    movie.id == safeId
+                }) {
                     return UISwipeActionsConfiguration(actions: [unfavoriteAction])
                 } else {
                     return UISwipeActionsConfiguration(actions: [favoriteAction])
@@ -306,7 +313,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             }
         } else {
             if let safeId = movies[indexPath.row].id {
-                if favoriteMovies.contains(safeId) {
+                if favoriteMovies.contains(where: { movie in
+                    movie.id == safeId
+                }) {
                     return UISwipeActionsConfiguration(actions: [unfavoriteAction])
                 } else {
                     return UISwipeActionsConfiguration(actions: [favoriteAction])
@@ -319,7 +328,10 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        favoriteMovies = UserDefaults.standard.object(forKey: "favorites") as? [Int] ?? [Int]()
+        
+        if let data = UserDefaults.standard.value(forKey:"favorites") as? Data {
+            favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
+        }
         tableView.reloadData()
     }
 
@@ -358,3 +370,4 @@ extension PopularViewController: UISearchBarDelegate {
     }
 
 }
+

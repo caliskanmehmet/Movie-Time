@@ -9,5 +9,5 @@ import Foundation
 
 struct FavoriteMovie: Codable {
     let id: Int?
-    let backdropPath: String?
+    let posterPath: String?
 }
