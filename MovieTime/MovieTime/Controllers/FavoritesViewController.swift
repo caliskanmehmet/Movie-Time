@@ -8,22 +8,40 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
-
+    @IBOutlet weak var favoriteCollectionView: UICollectionView! {
+        didSet {
+            favoriteCollectionView.dataSource = self
+            favoriteCollectionView.delegate = self
+            favoriteCollectionView.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        }
+    }
+    
+    let cellId = "FavoriteCollectionViewCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         print("Favorites")
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
     }
-    */
 
+}
+
+//MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+
+extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        return cell
+    }
+    
+    
 }
