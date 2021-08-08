@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -64,7 +65,7 @@
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FavoriteCollectionViewCell" id="ocP-R8-m9m" customClass="FavoriteCollectionViewCell" customModule="MovieTime" customModuleProvider="target">
                                         <rect key="frame" x="16" y="10" width="180" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cIy-ta-qE6">
                                             <rect key="frame" x="0.0" y="0.0" width="180" height="300"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -75,14 +76,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                             </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="mKR-Gd-kSA" firstAttribute="leading" secondItem="ocP-R8-m9m" secondAttribute="leading" id="M6b-8t-cIs"/>
-                                            <constraint firstItem="mKR-Gd-kSA" firstAttribute="top" secondItem="ocP-R8-m9m" secondAttribute="top" id="McZ-8k-2yl"/>
-                                            <constraint firstAttribute="bottom" secondItem="mKR-Gd-kSA" secondAttribute="bottom" id="dN6-1h-frc"/>
-                                            <constraint firstAttribute="trailing" secondItem="mKR-Gd-kSA" secondAttribute="trailing" id="jTf-OB-Jgz"/>
-                                        </constraints>
-                                        <size key="customSize" width="180" height="300"/>
+                                            <constraints>
+                                                <constraint firstItem="mKR-Gd-kSA" firstAttribute="leading" secondItem="cIy-ta-qE6" secondAttribute="leading" id="M6b-8t-cIs"/>
+                                                <constraint firstItem="mKR-Gd-kSA" firstAttribute="top" secondItem="cIy-ta-qE6" secondAttribute="top" id="McZ-8k-2yl"/>
+                                                <constraint firstAttribute="bottom" secondItem="mKR-Gd-kSA" secondAttribute="bottom" id="dN6-1h-frc"/>
+                                                <constraint firstAttribute="trailing" secondItem="mKR-Gd-kSA" secondAttribute="trailing" id="jTf-OB-Jgz"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="posterImageView" destination="mKR-Gd-kSA" id="eh4-ce-ZYo"/>
                                         </connections>

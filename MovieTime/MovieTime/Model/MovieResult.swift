@@ -20,7 +20,7 @@ struct Movie: Codable, Identifiable {
     let runtime: Int?
     let overview: String?
     let releaseDate: String?
-    let genreIds: [Int]?
+    let genres: [Genre]?
     let id: Int?
     let originalTitle: String?
     let originalLanguage: String?

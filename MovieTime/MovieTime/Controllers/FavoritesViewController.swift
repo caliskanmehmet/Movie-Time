@@ -28,14 +28,13 @@ class FavoritesViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        print("viewWillAppear!!!")
+        super.viewWillAppear(animated)
         
         if let data = UserDefaults.standard.value(forKey:"favorites") as? Data {
             favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
+            favoriteCollectionView.reloadData()
         }
         
-        favoriteCollectionView.reloadData()
     }
 
 }
@@ -55,6 +54,15 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
             return safeCell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = DetailViewController()
+        
+        detailVC.favoriteMovies = favoriteMovies
+        detailVC.movieId = favoriteMovies[indexPath.row].id
+        
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     

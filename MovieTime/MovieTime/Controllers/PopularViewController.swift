@@ -53,7 +53,6 @@ class PopularViewController: UIViewController {
         }
 
         getMoviesAndUpdate(pageNumber: pageNumber)
-        getGenres()
         initializeSearchController()
     }
 
@@ -78,19 +77,6 @@ class PopularViewController: UIViewController {
                     self?.movies.append(contentsOf: movies)
                     print("Fetched page \(pageNumber)")
                     self?.pageNumber += 1
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-
-    func getGenres() {
-        GenreManager.shared.getGenres { response in
-            switch response {
-            case .success(let result):
-                if let genres = result.genres {
-                    GenreManager.shared.genres = genres
                 }
             case .failure(let error):
                 print(error)
@@ -206,9 +192,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         detailVC.favoriteMovies = favoriteMovies
 
         if isFiltering {
-            detailVC.movie = filteredMovies[indexPath.row]
+            detailVC.movieId = filteredMovies[indexPath.row].id
         } else {
-            detailVC.movie = movies[indexPath.row]
+            detailVC.movieId = movies[indexPath.row].id
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

@@ -30,10 +30,10 @@ class MovieTableViewCell: UITableViewCell {
         super.prepareForReuse()
         
         favoriteIcon.isHidden = true
-        posterImageView.showGradientSkeleton()
-        titleLabel.text = ""
-        ratingLabel.text = ""
-        dateLabel.text = ""
+        //posterImageView.showGradientSkeleton()
+        //titleLabel.text = ""
+        //ratingLabel.text = ""
+        //dateLabel.text = ""
     }
     
     
