@@ -47,7 +47,7 @@ class MovieManager {
             self.isFetching = false
         }
     }
-    
+
     func getMovieDetails(id: Int, completion: @escaping (Result<Movie, AFError>) -> Void) {
         isFetching = true
         let parameters: Parameters = ["api_key": NetworkConstants.apiKey]
@@ -57,7 +57,7 @@ class MovieManager {
 
         request.responseDecodable(of: Movie.self, decoder: decoder) { response in
             completion(response.result)
-            //print(response.result)
+            // print(response.result)
             self.isFetching = false
         }
     }

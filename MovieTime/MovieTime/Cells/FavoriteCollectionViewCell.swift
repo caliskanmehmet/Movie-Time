@@ -11,10 +11,10 @@ import Kingfisher
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var posterImageView: UIImageView!
-    
+
     func configure(with movie: FavoriteMovie) {
         posterImageView.showAnimatedSkeleton()
-        
+
         let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
 
         if let safeUrl = movie.posterPath {
@@ -37,11 +37,11 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
             posterImageView.image = UIImage(named: "placeholder")
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         // posterImageView.showGradientSkeleton()
     }
-    
+
 }

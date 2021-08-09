@@ -15,7 +15,7 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var favoriteIcon: UIImageView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -25,25 +25,23 @@ class MovieTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         favoriteIcon.isHidden = true
-        //posterImageView.showGradientSkeleton()
-        //titleLabel.text = ""
-        //ratingLabel.text = ""
-        //dateLabel.text = ""
+        // posterImageView.showGradientSkeleton()
+        // titleLabel.text = ""
+        // ratingLabel.text = ""
+        // dateLabel.text = ""
     }
-    
-    
 
     func configure(with movie: Movie, favorites: [FavoriteMovie]) {
         setLabelTexts(with: movie)
         setFavoriteIcon(with: movie, favorites: favorites)
         downloadAndSetPosterImage(with: movie)
     }
-    
+
     private func setFavoriteIcon(with movie: Movie, favorites: [FavoriteMovie]) {
         if let safeId = movie.id {
             if favorites.contains(where: { movie in
@@ -53,24 +51,24 @@ class MovieTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     private func setLabelTexts(with movie: Movie) {
         titleLabel.showGradientSkeleton()
         ratingLabel.showGradientSkeleton()
         dateLabel.showGradientSkeleton()
-        
+
         titleLabel.text = movie.title
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10")
-        
+
         titleLabel.hideSkeleton()
         ratingLabel.hideSkeleton()
         dateLabel.hideSkeleton()
     }
-    
+
     private func downloadAndSetPosterImage(with movie: Movie) {
         posterImageView.showAnimatedSkeleton()
-        
+
         let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
 
         if let safeUrl = movie.getPosterPath() {
@@ -93,6 +91,5 @@ class MovieTableViewCell: UITableViewCell {
             posterImageView.image = UIImage(named: "placeholder")
         }
     }
-
 
 }
