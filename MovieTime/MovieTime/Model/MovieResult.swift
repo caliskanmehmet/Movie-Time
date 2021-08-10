@@ -30,6 +30,17 @@ struct Movie: Codable, Identifiable {
     let voteCount: Int?
     let video: Bool?
     let voteAverage: Float?
+    
+    func getBudget() -> String {
+        if let safeBudget = budget {
+            if budget != 0 {
+                let result = "\(NumberFormatter.localizedString(from: NSNumber(value: safeBudget), number: NumberFormatter.Style.decimal)) $"
+                return result
+            }
+        }
+        
+        return " - "
+    }
 
     func getPosterPath() -> String? {
         if let safePath = posterPath {
@@ -68,9 +79,21 @@ struct Movie: Codable, Identifiable {
 
     func getRating() -> String {
         if let rating = voteAverage {
-            return String(format: "%.1f", rating)
+            if rating != 0.0 {
+                return String(format: "%.1f / 10", rating)
+            }
         }
 
+        return " - "
+    }
+    
+    func getVoteCount() -> String {
+        if let safeVoteCount = voteCount {
+            if safeVoteCount != 0 {
+                return "\(safeVoteCount)"
+            }
+        }
+        
         return " - "
     }
 }

@@ -95,14 +95,21 @@ class DetailViewController: UIViewController {
     }
 
     private func setLabelTexts(with movie: Movie) {
-        let runtimeTuple = minutesToHoursMinutes(minutes: movie.runtime ?? 0)
-        let runtimeString = "\(runtimeTuple.0)h \(runtimeTuple.1)m"
-        let budgetString = NumberFormatter.localizedString(from: NSNumber(value: movie.budget ?? 0), number: NumberFormatter.Style.decimal)
+        var runtimeString = " - "
+        
+        if let runtime = movie.runtime {
+            if runtime != 0 {
+                let runtimeTuple = minutesToHoursMinutes(minutes: runtime)
+                runtimeString = "\(runtimeTuple.0)h \(runtimeTuple.1)m"
+            }
+        }
+        
+        let budgetString = movie.getBudget()
 
         runtimeLabel.addLeading(image: UIImage(named: "clock") ?? UIImage(), text: " \(runtimeString) ")
-        budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) $")
+        budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) ")
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
-        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10 (\(movie.voteCount ?? 0) votes)")
+        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) (\(movie.getVoteCount()) votes)")
 
         titleLabel.text = movie.title
         releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"

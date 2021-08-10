@@ -29,7 +29,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.fill" translatesAutoresizingMaskIntoConstraints="NO" id="plj-if-82B">
-                        <rect key="frame" x="320" y="12" width="25" height="25"/>
+                        <rect key="frame" x="320" y="10" width="25" height="25"/>
                         <color key="tintColor" red="0.85676693920000002" green="0.067820370199999994" blue="0.075979389250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="NqE-cr-h0L"/>
@@ -38,10 +38,10 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="TopLeft" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ypa-Nn-JlT">
-                        <rect key="frame" x="124" y="16" width="217" height="126"/>
+                        <rect key="frame" x="124" y="24" width="217" height="118"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sra-Ai-tAp">
-                                <rect key="frame" x="0.0" y="0.0" width="217" height="53"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sra-Ai-tAp">
+                                <rect key="frame" x="0.0" y="0.0" width="217" height="43"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -52,16 +52,32 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChV-bY-AqD">
-                                <rect key="frame" x="0.0" y="69" width="217" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChV-bY-AqD">
+                                <rect key="frame" x="0.0" y="59" width="217" height="21.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="􀉉">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="18" name="SFProRounded-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6s-iW-9xh">
-                                <rect key="frame" x="0.0" y="105.5" width="217" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6s-iW-9xh">
+                                <rect key="frame" x="0.0" y="96.5" width="217" height="21.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="􀋃">
+                                        <attributes>
+                                            <font key="NSFont" size="18" name="SFProRounded-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
@@ -71,13 +87,16 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </stackView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Ypa-Nn-JlT" secondAttribute="trailing" constant="16" id="HpZ-O2-BUP"/>
                     <constraint firstItem="lhd-dc-7BV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="JJN-bo-uRa"/>
-                    <constraint firstItem="Ypa-Nn-JlT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="NeM-mg-Qdy"/>
-                    <constraint firstItem="plj-if-82B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="ZQK-3E-1qT"/>
+                    <constraint firstItem="Ypa-Nn-JlT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="NeM-mg-Qdy"/>
+                    <constraint firstItem="plj-if-82B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ZQK-3E-1qT"/>
                     <constraint firstAttribute="trailing" secondItem="plj-if-82B" secondAttribute="trailing" constant="12" id="fYh-LN-Sme"/>
                     <constraint firstAttribute="bottom" secondItem="Ypa-Nn-JlT" secondAttribute="bottom" constant="8" id="fgY-Gx-BSG"/>
                     <constraint firstItem="lhd-dc-7BV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="y10-OY-EwL"/>
@@ -99,6 +118,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="heart.fill" width="13" height="12"/>
+        <image name="heart.fill" width="25.5" height="24.5"/>
     </resources>
 </document>

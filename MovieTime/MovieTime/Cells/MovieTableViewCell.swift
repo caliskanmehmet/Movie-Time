@@ -30,10 +30,13 @@ class MovieTableViewCell: UITableViewCell {
         super.prepareForReuse()
 
         favoriteIcon.isHidden = true
-        // posterImageView.showGradientSkeleton()
-        // titleLabel.text = ""
-        // ratingLabel.text = ""
-        // dateLabel.text = ""
+    }
+    
+    func resetContents() {
+        posterImageView.image = UIImage(named: "placeholder")
+        titleLabel.text = ""
+        ratingLabel.text = ""
+        dateLabel.text = ""
     }
 
     func configure(with movie: Movie, favorites: [FavoriteMovie]) {
@@ -58,8 +61,11 @@ class MovieTableViewCell: UITableViewCell {
         dateLabel.showGradientSkeleton()
 
         titleLabel.text = movie.title
-        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
-        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) / 10")
+        dateLabel.text = "􀉉 \(movie.getReleaseDate())"
+        
+            //dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        ratingLabel.text = "􀋃 \(movie.getRating())"
+        //ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating())")
 
         titleLabel.hideSkeleton()
         ratingLabel.hideSkeleton()

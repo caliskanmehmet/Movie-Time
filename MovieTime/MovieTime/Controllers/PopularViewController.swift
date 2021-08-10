@@ -88,7 +88,11 @@ class PopularViewController: UIViewController {
                     self?.pageNumber += 1
                 }
             case .failure(let error):
-                print(error)
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
+
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                self?.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -156,7 +160,7 @@ class PopularViewController: UIViewController {
         return footerView
     }
 
-    func scrollToTop() {
+    private func scrollToTop() {
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
@@ -175,7 +179,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             } else {
                 cell.configure(with: movies[indexPath.row], favorites: favoriteMovies)
             }
-
+        
             return cell
         } else {
             return UITableViewCell()
