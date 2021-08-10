@@ -35,7 +35,7 @@
                             <constraint firstItem="eoT-Ga-H5h" firstAttribute="top" secondItem="0U0-rp-q6u" secondAttribute="top" id="krL-wI-VtN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="MovieTracker - Popular Movies" id="RQ4-1Y-TLn"/>
+                    <navigationItem key="navigationItem" title="MovieTime - Featured Movies" id="RQ4-1Y-TLn"/>
                     <connections>
                         <outlet property="tableView" destination="eoT-Ga-H5h" id="J4T-Zt-uxm"/>
                     </connections>
@@ -99,7 +99,7 @@
                             <constraint firstItem="n2N-dH-JUl" firstAttribute="leading" secondItem="jUS-iW-VpV" secondAttribute="leading" id="Z4Z-mI-IZ3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="MovieTracker - Favorite Movies" id="DuY-6g-c0D"/>
+                    <navigationItem key="navigationItem" title="MovieTime - Favorite Movies" id="DuY-6g-c0D"/>
                     <connections>
                         <outlet property="favoriteCollectionView" destination="n2N-dH-JUl" id="fhf-gq-gS2"/>
                     </connections>
@@ -130,7 +130,7 @@
         <scene sceneID="wQx-8k-PmG">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mgr-ar-FfO" userLabel="Popular Navigation" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Popular" image="star" selectedImage="star.fill" id="cIx-rD-HJs"/>
+                    <tabBarItem key="tabBarItem" systemItem="featured" id="cIx-rD-HJs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vfu-36-zmW">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -149,7 +149,7 @@
         <scene sceneID="eEU-BA-C0G">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tgz-Z3-unT" userLabel="Favorites Navigation" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="heart" selectedImage="heart.fill" id="5Dm-PE-hsc"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="heart.fill.blue" selectedImage="heart.fill.blue" id="5Dm-PE-hsc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eUF-4V-dcr">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -166,10 +166,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="heart" width="13" height="12"/>
-        <image name="heart.fill" width="13" height="12"/>
-        <image name="star" width="15" height="14"/>
-        <image name="star.fill" width="15" height="14"/>
+        <image name="heart.fill.blue" width="33.5" height="33.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

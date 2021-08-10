@@ -234,7 +234,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         let favoriteAction = getFavoriteAction(indexPath: indexPath)
         let unfavoriteAction = getUnfavoriteAction(indexPath: indexPath)
 
-        favoriteAction.image = UIImage(named: "heart.fill")
+        favoriteAction.image = UIImage(named: "heart.fill.white")
         favoriteAction.backgroundColor = .red
 
         unfavoriteAction.image = UIImage(named: "heart.slash")

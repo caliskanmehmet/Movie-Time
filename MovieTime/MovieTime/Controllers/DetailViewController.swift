@@ -88,8 +88,10 @@ class DetailViewController: UIViewController {
                 movie.id == safeId
             }) {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
+                print("heart.slash")
             } else {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
+                print("heart.outlined")
             }
         }
     }
@@ -106,10 +108,14 @@ class DetailViewController: UIViewController {
         
         let budgetString = movie.getBudget()
 
-        runtimeLabel.addLeading(image: UIImage(named: "clock") ?? UIImage(), text: " \(runtimeString) ")
-        budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) ")
-        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
-        ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) (\(movie.getVoteCount()) votes)")
+        runtimeLabel.text = "􀐫 \(runtimeString)"
+        budgetLabel.text = "􀖗 \(budgetString)"
+        dateLabel.text = "􀉉 \(movie.getReleaseDate())"
+        ratingLabel.text = "􀋃 \(movie.getRating())"
+        //runtimeLabel.addLeading(image: UIImage(named: "clock") ?? UIImage(), text: " \(runtimeString) ")
+        //budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) ")
+        //dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        //ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) (\(movie.getVoteCount()) votes)")
 
         titleLabel.text = movie.title
         releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"
@@ -149,7 +155,7 @@ class DetailViewController: UIViewController {
             }) {
                 // Unfavorite the film
 
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteTapped))
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
 
                 if let index = safeFavMovies.firstIndex(where: {$0.id == safeId}) {
                     self.favoriteMovies?.remove(at: index)
