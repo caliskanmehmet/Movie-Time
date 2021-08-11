@@ -84,15 +84,10 @@ class PopularViewController: UIViewController {
             case .success(let result):
                 if let movies = result.results {
                     self?.movies.append(contentsOf: movies)
-                    print("Fetched page \(pageNumber)")
                     self?.pageNumber += 1
                 }
             case .failure(let error):
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
-
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-
-                self?.present(alert, animated: true, completion: nil)
+                self?.showAlertMessage(error: error)
             }
         }
     }
@@ -101,19 +96,14 @@ class PopularViewController: UIViewController {
         let child = SpinnerViewController()
 
         if filteredMovies.count == 0 {
-            self.addChild(child)
-            child.view.frame = view.frame
-            view.addSubview(child.view)
-            child.didMove(toParent: self)
+            showSpinnerView(child: child)
         } else {
             tableView.tableFooterView = createSpinnerFooter()
         }
 
         MovieManager.shared.searchMovies(pageNumber: pageNumber, query: query) { [weak self] response in
             if self?.filteredMovies.count == 0 {
-                child.willMove(toParent: nil)
-                child.view.removeFromSuperview()
-                child.removeFromParent()
+                self?.hideSpinnerView(child: child)
             } else {
                 self?.tableView.tableFooterView = nil // Remove the spinner footer
             }
@@ -123,9 +113,8 @@ class PopularViewController: UIViewController {
                 if let movies = result.results {
                     if movies.count > 0 {
                         self?.filteredMovies.append(contentsOf: movies)
-                        print("Fetched page \(pageNumber)")
 
-                        self?.tableView.reloadData {
+                        self?.tableView.reloadDataThenPerform {
                             if pageNumber == 1 { // Only scroll to top when it is the first page
                                 self?.scrollToTop()
                             }
@@ -133,7 +122,7 @@ class PopularViewController: UIViewController {
 
                         self?.filteredPageNumber += 1
                     } else if movies.count == 0 && self?.filteredMovies.count == 0 {
-                        let alert = UIAlertController(title: "Error", message: "No movie available!", preferredStyle: UIAlertController.Style.alert)
+                        let alert = UIAlertController(title: "Warning", message: "No movie available with the given title!", preferredStyle: UIAlertController.Style.alert)
 
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
 
@@ -144,7 +133,7 @@ class PopularViewController: UIViewController {
                     }
                 }
             case .failure(let error):
-                print(error)
+                self?.showAlertMessage(error: error)
             }
         }
     }
@@ -187,11 +176,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredMovies.count
-        } else {
-            return movies.count
-        }
+        return getMovieArray().count
     }
 
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -203,11 +188,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         let detailVC = DetailViewController()
         detailVC.favoriteMovies = favoriteMovies
 
-        if isFiltering {
-            detailVC.movieId = filteredMovies[indexPath.row].id
-        } else {
-            detailVC.movieId = movies[indexPath.row].id
-        }
+        detailVC.movieId = getMovieArray()[indexPath.row].id
 
         tableView.deselectRow(at: indexPath, animated: true)
         navigationController?.pushViewController(detailVC, animated: true)
@@ -240,25 +221,15 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         unfavoriteAction.image = UIImage(named: "heart.slash")
         unfavoriteAction.backgroundColor = .gray
 
-        if isFiltering {
-            if let safeId = filteredMovies[indexPath.row].id {
-                if favoriteMovies.contains(where: { movie in
-                    movie.id == safeId
-                }) {
-                    return UISwipeActionsConfiguration(actions: [unfavoriteAction])
-                } else {
-                    return UISwipeActionsConfiguration(actions: [favoriteAction])
-                }
-            }
-        } else {
-            if let safeId = movies[indexPath.row].id {
-                if favoriteMovies.contains(where: { movie in
-                    movie.id == safeId
-                }) {
-                    return UISwipeActionsConfiguration(actions: [unfavoriteAction])
-                } else {
-                    return UISwipeActionsConfiguration(actions: [favoriteAction])
-                }
+        let movieArray = getMovieArray()
+
+        if let safeId = movieArray[indexPath.row].id {
+            if favoriteMovies.contains(where: { movie in
+                movie.id == safeId
+            }) {
+                return UISwipeActionsConfiguration(actions: [unfavoriteAction])
+            } else {
+                return UISwipeActionsConfiguration(actions: [favoriteAction])
             }
         }
 
@@ -268,20 +239,13 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     private func getFavoriteAction(indexPath: IndexPath) -> UIContextualAction {
         let favoriteAction = UIContextualAction(style: .normal, title: "Favorite", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call favorite action
-            if self.isFiltering {
-                let movie = self.filteredMovies[indexPath.row]
-                if let safeId = movie.id {
-                    self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
-                } else {
-                    print("Error during ID fetching")
-                }
+            let movieArray = self.getMovieArray()
+
+            let movie = movieArray[indexPath.row]
+            if let safeId = movie.id {
+                self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
             } else {
-                let movie = self.movies[indexPath.row]
-                if let safeId = movie.id {
-                    self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
-                } else {
-                    print("Error during ID fetching")
-                }
+                print("Error during ID fetching")
             }
 
             UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey: "favorites")
@@ -302,22 +266,14 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     private func getUnfavoriteAction(indexPath: IndexPath) -> UIContextualAction {
         let unfavoriteAction = UIContextualAction(style: .normal, title: "Unfavorite", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call unfavorite action
-            if self.isFiltering {
-                if let safeId = self.filteredMovies[indexPath.row].id {
-                    if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
-                        self.favoriteMovies.remove(at: index)
-                    }
-                } else {
-                    print("Error during ID fetching")
+            let movieArray = self.getMovieArray()
+
+            if let safeId = movieArray[indexPath.row].id {
+                if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
+                    self.favoriteMovies.remove(at: index)
                 }
             } else {
-                if let safeId = self.movies[indexPath.row].id {
-                    if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
-                        self.favoriteMovies.remove(at: index)
-                    }
-                } else {
-                    print("Error during ID fetching")
-                }
+                print("Error during ID fetching")
             }
 
             UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey: "favorites")
@@ -333,6 +289,35 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         })
 
         return unfavoriteAction
+    }
+
+    private func showAlertMessage(error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+        present(alert, animated: true, completion: nil)
+    }
+
+    private func getMovieArray() -> [Movie] {
+        if isFiltering {
+            return filteredMovies
+        } else {
+            return movies
+        }
+    }
+
+    private func showSpinnerView(child: SpinnerViewController) {
+        self.addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+
+    private func hideSpinnerView(child: SpinnerViewController) {
+        child.willMove(toParent: nil)
+        child.view.removeFromSuperview()
+        child.removeFromParent()
     }
 
 }
