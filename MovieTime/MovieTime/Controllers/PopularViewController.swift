@@ -55,7 +55,7 @@ class PopularViewController: UIViewController {
         getMoviesAndUpdate(pageNumber: pageNumber)
         initializeSearchController()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -179,7 +179,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             } else {
                 cell.configure(with: movies[indexPath.row], favorites: favoriteMovies)
             }
-        
+
             return cell
         } else {
             return UITableViewCell()
@@ -289,7 +289,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             // Reset state
             success(true)
 
-            Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { _ in
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
                 // tableView.reloadRows(at: [indexPath], with: .automatic)
                 self.tableView.reloadData()
             }
@@ -325,7 +325,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             // Reset state
             success(true)
 
-            Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { _ in
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
                 // tableView.reloadRows(at: [indexPath], with: .automatic)
                 self.tableView.reloadData()
             }

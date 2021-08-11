@@ -100,13 +100,13 @@
 			isa = PBXGroup;
 			children = (
 				6F8F350226C2A3CD00E64176 /* Fonts */,
-				6F07ECD626C29D9000807518 /* Assets.xcassets */,
 				6F53C45926B82CD900F7E193 /* Controllers */,
 				6F7694F026B7F0A0005D0D39 /* Base */,
 				6F26C8EA26B6D2E500ECDFA9 /* Views */,
-				6FED795B26B535480064E38A /* Extension */,
+				6FED795B26B535480064E38A /* Extensions */,
 				6FCDAF7226B444CC0096B5EC /* Cells */,
 				6FCDAF6B26B4392C0096B5EC /* Model */,
+				6F07ECD626C29D9000807518 /* Assets.xcassets */,
 			);
 			path = MovieTime;
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		6FED795B26B535480064E38A /* Extension */ = {
+		6FED795B26B535480064E38A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				6FED795C26B535560064E38A /* UILabel+Extension.swift */,
@@ -181,7 +181,7 @@
 				6FF639AC26BBF37F00C55063 /* UIView+Extension.swift */,
 				6FF639AE26BBFBF400C55063 /* String+Extension.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CA53828064B1248BCC95E07B /* Frameworks */ = {

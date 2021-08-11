@@ -30,7 +30,7 @@ struct Movie: Codable, Identifiable {
     let voteCount: Int?
     let video: Bool?
     let voteAverage: Float?
-    
+
     func getBudget() -> String {
         if let safeBudget = budget {
             if budget != 0 {
@@ -38,7 +38,7 @@ struct Movie: Codable, Identifiable {
                 return result
             }
         }
-        
+
         return " - "
     }
 
@@ -86,14 +86,14 @@ struct Movie: Codable, Identifiable {
 
         return " - "
     }
-    
+
     func getVoteCount() -> String {
         if let safeVoteCount = voteCount {
             if safeVoteCount != 0 {
                 return "\(safeVoteCount)"
             }
         }
-        
+
         return " - "
     }
 }

@@ -22,8 +22,14 @@ extension UILabel {
     }
 
     func addLeading(image: UIImage, text: String) {
+        let offsetY = -5.0
+
         let attachment = NSTextAttachment()
         attachment.image = image
+        attachment.bounds = CGRect(x: 0.0,
+                                   y: CGFloat(offsetY),
+                                   width: attachment.image?.size.width ?? 0,
+                                   height: attachment.image?.size.height ?? 0)
 
         let attachmentString = NSAttributedString(attachment: attachment)
         let mutableAttributedString = NSMutableAttributedString()

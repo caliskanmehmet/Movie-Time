@@ -19,6 +19,15 @@ class GenreCollectionViewCell: UICollectionViewCell {
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 1
         self.layer.masksToBounds = true
+
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            self.layer.borderColor = UIColor.black.cgColor
+        case .dark:
+            self.layer.borderColor = UIColor.white.cgColor
+        default:
+            self.layer.borderColor = UIColor.black.cgColor
+        }
     }
 
 }

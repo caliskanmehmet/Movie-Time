@@ -20,7 +20,11 @@ class DetailViewController: UIViewController {
     }
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel! {
+        didSet {
+            ratingLabel.adjustsFontSizeToFitWidth = true
+        }
+    }
     @IBOutlet weak var overviewView: UIView!
     @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet weak var basicInfoView: UIView!
@@ -88,34 +92,32 @@ class DetailViewController: UIViewController {
                 movie.id == safeId
             }) {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
-                print("heart.slash")
             } else {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
-                print("heart.outlined")
             }
         }
     }
 
     private func setLabelTexts(with movie: Movie) {
         var runtimeString = " - "
-        
+
         if let runtime = movie.runtime {
             if runtime != 0 {
                 let runtimeTuple = minutesToHoursMinutes(minutes: runtime)
                 runtimeString = "\(runtimeTuple.0)h \(runtimeTuple.1)m"
             }
         }
-        
+
         let budgetString = movie.getBudget()
 
         runtimeLabel.text = "􀐫 \(runtimeString)"
         budgetLabel.text = "􀖗 \(budgetString)"
-        dateLabel.text = "􀉉 \(movie.getReleaseDate())"
-        ratingLabel.text = "􀋃 \(movie.getRating())"
-        //runtimeLabel.addLeading(image: UIImage(named: "clock") ?? UIImage(), text: " \(runtimeString) ")
-        //budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) ")
-        //dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
-        //ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) (\(movie.getVoteCount()) votes)")
+        // dateLabel.text = "􀉉 \(movie.getReleaseDate())"
+        ratingLabel.text = "􀋃 \(movie.getRating()) (\(movie.getVoteCount()) votes)"
+        // runtimeLabel.addLeading(image: UIImage(named: "clock") ?? UIImage(), text: " \(runtimeString) ")
+        // budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) ")
+        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        // ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) (\(movie.getVoteCount()) votes)")
 
         titleLabel.text = movie.title
         releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"

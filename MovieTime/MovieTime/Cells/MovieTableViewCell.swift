@@ -31,7 +31,7 @@ class MovieTableViewCell: UITableViewCell {
 
         favoriteIcon.isHidden = true
     }
-    
+
     func resetContents() {
         posterImageView.image = UIImage(named: "placeholder")
         titleLabel.text = ""
@@ -60,12 +60,12 @@ class MovieTableViewCell: UITableViewCell {
         ratingLabel.showGradientSkeleton()
         dateLabel.showGradientSkeleton()
 
-        titleLabel.text = movie.title
-        dateLabel.text = "􀉉 \(movie.getReleaseDate())"
-        
-            //dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        titleLabel.text = movie.title // 􀉉􀉉
+        // dateLabel.text = "􀒏 \(movie.getReleaseDate())"
+
+        dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.text = "􀋃 \(movie.getRating())"
-        //ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating())")
+        // ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating())")
 
         titleLabel.hideSkeleton()
         ratingLabel.hideSkeleton()
@@ -80,7 +80,8 @@ class MovieTableViewCell: UITableViewCell {
         if let safeUrl = movie.getPosterPath() {
             posterImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
                                                                               .scaleFactor(UIScreen.main.scale),
-                                                                              .cacheOriginalImage]) { [weak self] response in
+                                                                              .cacheOriginalImage,
+                                                                              .cacheSerializer(FormatIndicatedCacheSerializer.png)]) { [weak self] response in
 
                 switch response {
                 case .success(_):
