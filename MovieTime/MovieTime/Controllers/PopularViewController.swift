@@ -259,7 +259,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             // Reset state
             success(true)
 
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
                 // tableView.reloadRows(at: [indexPath], with: .automatic)
                 self.tableView.reloadData()
             }
@@ -289,7 +289,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
             // Reset state
             success(true)
 
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
                 // tableView.reloadRows(at: [indexPath], with: .automatic)
                 self.tableView.reloadData()
             }

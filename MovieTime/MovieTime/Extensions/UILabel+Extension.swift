@@ -21,8 +21,8 @@ extension UILabel {
         self.attributedText = string
     }
 
-    func addLeading(image: UIImage, text: String) {
-        let offsetY = -5.0
+    func addLeading(image: UIImage, text: String, offset: Double = -5.0) {
+        let offsetY = offset
 
         let attachment = NSTextAttachment()
         attachment.image = image

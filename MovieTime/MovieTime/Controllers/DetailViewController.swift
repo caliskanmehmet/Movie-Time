@@ -10,33 +10,38 @@ import Kingfisher
 
 class DetailViewController: UIViewController {
     @IBOutlet weak var mainScrollView: UIScrollView!
+    
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var posterImageView: UIImageView!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseYearLabel: UILabel! {
         didSet {
             releaseYearLabel.adjustsFontSizeToFitWidth = true
         }
     }
-    @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel! {
         didSet {
             ratingLabel.adjustsFontSizeToFitWidth = true
         }
     }
+    @IBOutlet weak var runtimeLabel: UILabel!
+    @IBOutlet weak var budgetLabel: UILabel!
+    @IBOutlet weak var revenueLabel: UILabel!
+    
     @IBOutlet weak var overviewView: UIView!
-    @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet weak var basicInfoView: UIView!
+    @IBOutlet weak var genreView: UIView!
+    
+    @IBOutlet weak var overviewTextView: UITextView!
+    @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet weak var genreCollectionView: UICollectionView! {
         didSet {
             genreCollectionView.dataSource = self
             genreCollectionView.register(UINib(nibName: cellId, bundle: nil), forCellWithReuseIdentifier: cellId)
         }
     }
-    @IBOutlet weak var genreView: UIView!
-    @IBOutlet weak var runtimeLabel: UILabel!
-    @IBOutlet weak var budgetLabel: UILabel!
 
     var movieId: Int?
     var movie: Movie?
@@ -111,10 +116,11 @@ class DetailViewController: UIViewController {
         let budgetString = movie.getBudget()
         let voteString = String(format: NSLocalizedString("votes", comment: ""), movie.getVoteCount())
 
-        runtimeLabel.text = "􀐫 \(runtimeString)"
-        budgetLabel.text = "􀖗 \(budgetString)"
-        ratingLabel.text = "􀋃 \(movie.getRating()) (\(voteString))"
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
+        ratingLabel.text = "􀋃  \(movie.getRating()) (\(voteString))"
+        runtimeLabel.text = "􀐫  \(runtimeString)"
+        budgetLabel.text = "􀖗  \(budgetString)"
+        revenueLabel.addLeading(image: UIImage(named: "revenue")!, text: "   \(movie.getRevenue())", offset: -2.0)
 
         titleLabel.text = movie.title
         releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"
@@ -184,6 +190,7 @@ class DetailViewController: UIViewController {
         overviewTextView.showGradientSkeleton()
         dateLabel.showGradientSkeleton()
         ratingLabel.showGradientSkeleton()
+        revenueLabel.showGradientSkeleton()
         genreCollectionView.showGradientSkeleton()
     }
 
@@ -195,9 +202,10 @@ class DetailViewController: UIViewController {
         overviewTextView.hideSkeleton()
         dateLabel.hideSkeleton()
         ratingLabel.hideSkeleton()
+        revenueLabel.hideSkeleton()
         genreCollectionView.hideSkeleton()
     }
-    
+
     private func showAlertMessage(error: Error) {
         let title = NSLocalizedString("error", comment: "Error")
         let actionTitle = NSLocalizedString("OK", comment: "OK")

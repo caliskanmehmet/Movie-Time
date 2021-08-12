@@ -24,6 +24,7 @@
                 <outlet property="posterImageView" destination="2tO-EG-k24" id="b3h-BU-i53"/>
                 <outlet property="ratingLabel" destination="IgB-VM-B7t" id="hX5-2l-RLO"/>
                 <outlet property="releaseYearLabel" destination="hmz-vo-UjL" id="yJC-Q3-XGX"/>
+                <outlet property="revenueLabel" destination="s1C-mu-aMn" id="6JB-S3-mJO"/>
                 <outlet property="runtimeLabel" destination="X0m-4j-vzk" id="uRU-vF-77a"/>
                 <outlet property="titleLabel" destination="OsF-95-i8c" id="maO-6t-PG0"/>
                 <outlet property="topStackView" destination="Kxh-ms-X07" id="sx2-Hf-8r2"/>
@@ -87,7 +88,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vRf-nt-7XQ">
-                                            <rect key="frame" x="127" y="25" width="263" height="131"/>
+                                            <rect key="frame" x="127" y="20" width="263" height="144"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXF-WF-Hg0" userLabel="Date Label">
                                                     <rect key="frame" x="0.0" y="0.0" width="263" height="19.5"/>
@@ -106,7 +107,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="252" verticalHuggingPriority="252" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IgB-VM-B7t" userLabel="Rating Label">
-                                                    <rect key="frame" x="0.0" y="37" width="263" height="19.5"/>
+                                                    <rect key="frame" x="0.0" y="31" width="263" height="19.5"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Label">
                                                             <attributes>
@@ -122,7 +123,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0m-4j-vzk" userLabel="Runtime Label">
-                                                    <rect key="frame" x="0.0" y="74.5" width="263" height="19.5"/>
+                                                    <rect key="frame" x="0.0" y="62.5" width="263" height="19.5"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Label">
                                                             <attributes>
@@ -137,7 +138,24 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNp-yp-OBi" userLabel="Budget Label">
-                                                    <rect key="frame" x="0.0" y="111.5" width="263" height="19.5"/>
+                                                    <rect key="frame" x="0.0" y="93.5" width="263" height="19.5"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Label">
+                                                            <attributes>
+                                                                <color key="NSColor" systemColor="labelColor"/>
+                                                                <font key="NSFont" size="16" name="SFProRounded-Regular"/>
+                                                                <font key="NSOriginalFont" size="18" name="SFProRounded-Regular"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1C-mu-aMn" userLabel="Revenue Label">
+                                                    <rect key="frame" x="0.0" y="124.5" width="263" height="19.5"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Label">
                                                             <attributes>
@@ -159,9 +177,9 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="vRf-nt-7XQ" secondAttribute="trailing" constant="8" id="9by-fB-9cF"/>
-                                        <constraint firstAttribute="bottom" secondItem="vRf-nt-7XQ" secondAttribute="bottom" constant="20" id="B5V-WZ-9Lp"/>
+                                        <constraint firstAttribute="bottom" secondItem="vRf-nt-7XQ" secondAttribute="bottom" constant="12" id="B5V-WZ-9Lp"/>
                                         <constraint firstAttribute="bottom" secondItem="2tO-EG-k24" secondAttribute="bottom" id="LiW-eY-pmW"/>
-                                        <constraint firstItem="vRf-nt-7XQ" firstAttribute="top" secondItem="LSA-HD-3Bv" secondAttribute="top" constant="25" id="WwJ-6v-13f"/>
+                                        <constraint firstItem="vRf-nt-7XQ" firstAttribute="top" secondItem="LSA-HD-3Bv" secondAttribute="top" constant="20" id="WwJ-6v-13f"/>
                                         <constraint firstItem="2tO-EG-k24" firstAttribute="top" secondItem="LSA-HD-3Bv" secondAttribute="top" constant="16" id="e1l-Bh-dex"/>
                                         <constraint firstAttribute="height" constant="176" id="mSu-Qs-vNd"/>
                                         <constraint firstItem="vRf-nt-7XQ" firstAttribute="leading" secondItem="2tO-EG-k24" secondAttribute="trailing" constant="8" id="o5a-ZZ-GJz"/>

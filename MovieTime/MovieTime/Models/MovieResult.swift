@@ -27,6 +27,7 @@ struct Movie: Codable, Identifiable {
     let title: String?
     let backdropPath: String?
     let popularity: Float?
+    let productionCompanies: [ProductionCompany]?
     let voteCount: Int?
     let video: Bool?
     let voteAverage: Float?
@@ -35,6 +36,17 @@ struct Movie: Codable, Identifiable {
         if let safeBudget = budget {
             if budget != 0 {
                 let result = "\(NumberFormatter.localizedString(from: NSNumber(value: safeBudget), number: NumberFormatter.Style.decimal)) $"
+                return result
+            }
+        }
+
+        return " - "
+    }
+
+    func getRevenue() -> String {
+        if let safeRevenue = revenue {
+            if safeRevenue != 0 {
+                let result = "\(NumberFormatter.localizedString(from: NSNumber(value: safeRevenue), number: NumberFormatter.Style.decimal)) $"
                 return result
             }
         }
