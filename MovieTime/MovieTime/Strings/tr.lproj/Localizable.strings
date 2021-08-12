@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  MovieTime
+
+  Created by obss on 12.08.2021.
+  
+*/
+
+"movie_duration" = "%ds %ddk";
+"votes" = "%@ oy";
+"favorite" = "Favorilere Ekle";
+"unfavorite" = "Favorilerden Kaldır";
+"warning" = "Uyarı";
+"no_movie" = "Belirtilen isimde bir film bulunamadı!";
+"OK" = "Tamam";
+"error" = "Hata";

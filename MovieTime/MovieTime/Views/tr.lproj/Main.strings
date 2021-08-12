@@ -1,0 +1,9 @@
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "5Dm-PE-hsc"; */
+"5Dm-PE-hsc.title" = "Favoriler";
+
+/* Class = "UINavigationItem"; title = "Favorite Movies"; ObjectID = "DuY-6g-c0D"; */
+"DuY-6g-c0D.title" = "Favori Filmler";
+
+/* Class = "UINavigationItem"; title = "Featured Movies"; ObjectID = "RQ4-1Y-TLn"; */
+"RQ4-1Y-TLn.title" = "Popüler Filmler";

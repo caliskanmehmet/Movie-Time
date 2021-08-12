@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  MovieTime
+
+  Created by obss on 12.08.2021.
+  
+*/
+
+"movie_duration" = "%dh %dm";
+"votes" = "%@ votes";
+"favorite" = "Favorite";
+"unfavorite" = "Unfavorite";
+"warning" = "Warning";
+"no_movie" = "No movie available with the given title!";
+"OK" = "OK";
+"error" = "Error";

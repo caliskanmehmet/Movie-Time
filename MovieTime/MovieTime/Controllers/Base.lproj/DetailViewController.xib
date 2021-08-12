@@ -214,6 +214,9 @@
                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                         </collectionView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genres" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObI-se-s5m">
                                             <rect key="frame" x="0.0" y="0.0" width="56" height="20.5"/>
@@ -226,12 +229,16 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="18b-5T-epm"/>
                                         <constraint firstAttribute="bottom" secondItem="JA1-Hu-1sy" secondAttribute="bottom" id="3af-TQ-Ekw"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ObI-se-s5m" secondAttribute="trailing" constant="20" symbolic="YES" id="4Lj-tN-g05"/>
                                         <constraint firstItem="ObI-se-s5m" firstAttribute="top" secondItem="ego-tZ-ss2" secondAttribute="top" id="7TB-i6-SBA"/>
                                         <constraint firstItem="JA1-Hu-1sy" firstAttribute="top" secondItem="ego-tZ-ss2" secondAttribute="top" constant="25" id="QV0-1h-V8i"/>
                                         <constraint firstItem="JA1-Hu-1sy" firstAttribute="leading" secondItem="ego-tZ-ss2" secondAttribute="leading" id="he3-lC-5vc"/>
                                         <constraint firstItem="ObI-se-s5m" firstAttribute="leading" secondItem="ego-tZ-ss2" secondAttribute="leading" id="uzk-au-QLd"/>
                                         <constraint firstAttribute="trailing" secondItem="JA1-Hu-1sy" secondAttribute="trailing" id="wmP-Tb-VsW"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

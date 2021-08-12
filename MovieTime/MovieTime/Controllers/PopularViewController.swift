@@ -122,9 +122,13 @@ class PopularViewController: UIViewController {
 
                         self?.filteredPageNumber += 1
                     } else if movies.count == 0 && self?.filteredMovies.count == 0 {
-                        let alert = UIAlertController(title: "Warning", message: "No movie available with the given title!", preferredStyle: UIAlertController.Style.alert)
+                        let warning = NSLocalizedString("warning", comment: "Warning")
+                        let message = NSLocalizedString("no_movie", comment: "No movie available!")
+                        let actionTitle = NSLocalizedString("OK", comment: "OK")
 
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        let alert = UIAlertController(title: warning, message: message, preferredStyle: UIAlertController.Style.alert)
+
+                        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
 
                         self?.present(alert, animated: true, completion: nil)
                         self?.isResponseEmpty = true
@@ -237,7 +241,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     private func getFavoriteAction(indexPath: IndexPath) -> UIContextualAction {
-        let favoriteAction = UIContextualAction(style: .normal, title: "Favorite", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
+        let title = NSLocalizedString("favorite", comment: "Favorite")
+
+        let favoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call favorite action
             let movieArray = self.getMovieArray()
 
@@ -264,7 +270,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     private func getUnfavoriteAction(indexPath: IndexPath) -> UIContextualAction {
-        let unfavoriteAction = UIContextualAction(style: .normal, title: "Unfavorite", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
+        let title = NSLocalizedString("unfavorite", comment: "Unfavorite")
+
+        let unfavoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call unfavorite action
             let movieArray = self.getMovieArray()
 
@@ -292,9 +300,12 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     private func showAlertMessage(error: Error) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
+        let title = NSLocalizedString("error", comment: "Error")
+        let actionTitle = NSLocalizedString("OK", comment: "OK")
 
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        let alert = UIAlertController(title: title, message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
 
         present(alert, animated: true, completion: nil)
     }

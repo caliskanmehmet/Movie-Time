@@ -66,7 +66,7 @@ class DetailViewController: UIViewController {
                 self?.initializeContent()
                 self?.hideSkeletons()
             case .failure(let error):
-                print(error)
+                self?.showAlertMessage(error: error)
             }
         }
     }
@@ -104,24 +104,21 @@ class DetailViewController: UIViewController {
         if let runtime = movie.runtime {
             if runtime != 0 {
                 let runtimeTuple = minutesToHoursMinutes(minutes: runtime)
-                runtimeString = "\(runtimeTuple.0)h \(runtimeTuple.1)m"
+                runtimeString = String(format: NSLocalizedString("movie_duration", comment: ""), runtimeTuple.0, runtimeTuple.1)
             }
         }
 
         let budgetString = movie.getBudget()
+        let voteString = String(format: NSLocalizedString("votes", comment: ""), movie.getVoteCount())
 
         runtimeLabel.text = "􀐫 \(runtimeString)"
         budgetLabel.text = "􀖗 \(budgetString)"
-        // dateLabel.text = "􀉉 \(movie.getReleaseDate())"
-        ratingLabel.text = "􀋃 \(movie.getRating()) (\(movie.getVoteCount()) votes)"
-        // runtimeLabel.addLeading(image: UIImage(named: "clock") ?? UIImage(), text: " \(runtimeString) ")
-        // budgetLabel.addLeading(image: UIImage(named: "dollar") ?? UIImage(), text: " \(budgetString) ")
+        ratingLabel.text = "􀋃 \(movie.getRating()) (\(voteString))"
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
-        // ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating()) (\(movie.getVoteCount()) votes)")
 
         titleLabel.text = movie.title
         releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"
-        overviewTextView.text = movie.overview
+        overviewTextView.text = movie.overview ?? " - "
     }
 
     private func downloadAndSetImage(with urlString: String?, imageView: UIImageView) {
@@ -187,6 +184,7 @@ class DetailViewController: UIViewController {
         overviewTextView.showGradientSkeleton()
         dateLabel.showGradientSkeleton()
         ratingLabel.showGradientSkeleton()
+        genreCollectionView.showGradientSkeleton()
     }
 
     private func hideSkeletons() {
@@ -197,6 +195,18 @@ class DetailViewController: UIViewController {
         overviewTextView.hideSkeleton()
         dateLabel.hideSkeleton()
         ratingLabel.hideSkeleton()
+        genreCollectionView.hideSkeleton()
+    }
+    
+    private func showAlertMessage(error: Error) {
+        let title = NSLocalizedString("error", comment: "Error")
+        let actionTitle = NSLocalizedString("OK", comment: "OK")
+
+        let alert = UIAlertController(title: title, message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
+
+        present(alert, animated: true, completion: nil)
     }
 
 }

@@ -10,20 +10,22 @@ import Alamofire
 
 struct NetworkConstants {
     static let apiKey = "e5cd56963b11843007db1b94312b521a"
-    static let popularMovies = "https://api.themoviedb.org/3/movie/popular?api_key=e5cd56963b11843007db1b94312b521a&language=en-US"
-    static let searchMovies = "https://api.themoviedb.org/3/search/movie?api_key=e5cd56963b11843007db1b94312b521a&language=en-US"
+    static let popularMovies = "https://api.themoviedb.org/3/movie/popular"
+    static let searchMovies = "https://api.themoviedb.org/3/search/movie"
     static let getMovieDetails = "https://api.themoviedb.org/3/movie/"
-    static let genres = "https://api.themoviedb.org/3/genre/movie/list?api_key=e5cd56963b11843007db1b94312b521a"
+    static let genres = "https://api.themoviedb.org/3/genre/movie/list"
 }
 
 class MovieManager {
 
     static let shared = MovieManager()
     var isFetching = false
+    var languageCode: String = Locale.current.languageCode ?? "en"
 
     func getPopularMovies(pageNumber: Int, completion: @escaping (Result<MovieResult, AFError>) -> Void) {
         isFetching = true
-        let parameters: Parameters = ["page": pageNumber]
+
+        let parameters: Parameters = ["api_key": NetworkConstants.apiKey, "page": pageNumber, "language": languageCode]
         let request = AF.request(NetworkConstants.popularMovies, parameters: parameters, encoding: URLEncoding(destination: .queryString))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -36,7 +38,7 @@ class MovieManager {
 
     func searchMovies(pageNumber: Int, query: String, completion: @escaping (Result<MovieResult, AFError>) -> Void) {
         isFetching = true
-        let parameters: Parameters = ["page": pageNumber, "query": query]
+        let parameters: Parameters = ["api_key": NetworkConstants.apiKey, "page": pageNumber, "query": query, "language": languageCode]
         let request = AF.request(NetworkConstants.searchMovies, parameters: parameters, encoding: URLEncoding(destination: .queryString))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -49,7 +51,7 @@ class MovieManager {
 
     func getMovieDetails(id: Int, completion: @escaping (Result<Movie, AFError>) -> Void) {
         isFetching = true
-        let parameters: Parameters = ["api_key": NetworkConstants.apiKey]
+        let parameters: Parameters = ["api_key": NetworkConstants.apiKey, "language": languageCode]
         let request = AF.request("\(NetworkConstants.getMovieDetails)\(id)", parameters: parameters, encoding: URLEncoding(destination: .queryString))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
