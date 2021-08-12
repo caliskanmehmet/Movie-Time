@@ -4,3 +4,6 @@
 
 /* Class = "UILabel"; text = "Overview"; ObjectID = "oiK-7X-rby"; */
 "oiK-7X-rby.text" = "Overview";
+
+/* Class = "UILabel"; text = "Production Companies"; ObjectID = "HBZ-bG-ZWV"; */
+"HBZ-bG-ZWV.text" = "Production Companies";

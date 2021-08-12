@@ -12,4 +12,12 @@ struct ProductionCompany: Codable {
     let logoPath: String?
     let name: String?
     let originCountry: String?
+
+    func getLogoPath() -> String? {
+        if let safePath = logoPath {
+            return "https://image.tmdb.org/t/p/w154\(safePath)"
+        } else {
+            return nil
+        }
+    }
 }

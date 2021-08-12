@@ -10,10 +10,10 @@ import Kingfisher
 
 class DetailViewController: UIViewController {
     @IBOutlet weak var mainScrollView: UIScrollView!
-    
+
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var posterImageView: UIImageView!
-    
+
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseYearLabel: UILabel! {
         didSet {
@@ -29,29 +29,38 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var runtimeLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
     @IBOutlet weak var revenueLabel: UILabel!
-    
+
     @IBOutlet weak var overviewView: UIView!
     @IBOutlet weak var basicInfoView: UIView!
     @IBOutlet weak var genreView: UIView!
-    
+    @IBOutlet weak var companyView: UIView!
+
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet weak var genreCollectionView: UICollectionView! {
         didSet {
             genreCollectionView.dataSource = self
-            genreCollectionView.register(UINib(nibName: cellId, bundle: nil), forCellWithReuseIdentifier: cellId)
+            genreCollectionView.register(UINib(nibName: genreCellId, bundle: nil), forCellWithReuseIdentifier: genreCellId)
+        }
+    }
+    @IBOutlet weak var companyCollectionView: UICollectionView! {
+        didSet {
+            companyCollectionView.dataSource = self
+            companyCollectionView.register(UINib(nibName: companyCellId, bundle: nil), forCellWithReuseIdentifier: companyCellId)
         }
     }
 
     var movieId: Int?
     var movie: Movie?
     var favoriteMovies: [FavoriteMovie]?
-    let cellId = "GenreCollectionViewCell"
+    let genreCellId = "GenreCollectionViewCell"
+    let companyCellId = "CompanyCollectionViewCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         fetchMovieDetails()
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -87,8 +96,10 @@ class DetailViewController: UIViewController {
 
         overviewView.addSeparator(at: .bottom, color: .systemGray)
         overviewView.addSeparator(at: .top, color: .systemGray)
+        companyView.addSeparator(at: .top, color: .systemGray)
 
         genreCollectionView.reloadData()
+        companyCollectionView.reloadData()
     }
 
     private func addFavoriteButton(with movie: Movie) {
@@ -223,17 +234,33 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movie?.genres?.count ?? 0
+
+        if collectionView == genreCollectionView {
+            return movie?.genres?.count ?? 0
+        } else {
+            return movie?.productionCompanies?.count ?? 0
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? GenreCollectionViewCell
-        if let safeCell = cell {
-            safeCell.genreLabel.text = movie?.genres?[indexPath.row].name
+        if collectionView == genreCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genreCellId, for: indexPath) as? GenreCollectionViewCell
 
-            return safeCell
+            if let safeCell = cell {
+                safeCell.genreLabel.text = movie?.genres?[indexPath.row].name
+                return safeCell
+            } else {
+                return UICollectionViewCell()
+            }
         } else {
-            return UICollectionViewCell()
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: companyCellId, for: indexPath) as? CompanyCollectionViewCell
+
+            if let safeCell = cell {
+                safeCell.configure(with: movie?.productionCompanies?[indexPath.row])
+                return safeCell
+            } else {
+                return UICollectionViewCell()
+            }
         }
     }
 
