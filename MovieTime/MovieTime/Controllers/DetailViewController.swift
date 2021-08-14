@@ -73,7 +73,9 @@ class DetailViewController: UIViewController {
     private func fetchMovieDetails() {
         showSkeletons()
 
-        MovieManager.shared.getMovieDetails(id: movieId ?? 0) { [weak self] response in
+        let urlRequest = APIRequest.getMovieDetails(movieId: movieId ?? 0)
+
+        NetworkManager.shared.fetchData(urlRequest: urlRequest, type: Movie.self) { [weak self] response in
             switch response {
             case .success(let result):
                 self?.movie = result

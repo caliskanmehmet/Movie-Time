@@ -77,7 +77,9 @@ class PopularViewController: UIViewController {
     func getMoviesAndUpdate(pageNumber: Int) {
         tableView.tableFooterView = createSpinnerFooter()
 
-        MovieManager.shared.getPopularMovies(pageNumber: pageNumber) { [weak self] response in
+        let urlRequest = APIRequest.getPopularMovies(pageNumber: pageNumber)
+
+        NetworkManager.shared.fetchData(urlRequest: urlRequest, type: MovieResult.self) { [weak self] response in
             self?.tableView.tableFooterView = nil // Remove the spinner footer
 
             switch response {
@@ -101,7 +103,9 @@ class PopularViewController: UIViewController {
             tableView.tableFooterView = createSpinnerFooter()
         }
 
-        MovieManager.shared.searchMovies(pageNumber: pageNumber, query: query) { [weak self] response in
+        let urlRequest = APIRequest.searchMovies(pageNumber: pageNumber, query: query)
+
+        NetworkManager.shared.fetchData(urlRequest: urlRequest, type: MovieResult.self) { [weak self] response in
             if self?.filteredMovies.count == 0 {
                 self?.hideSpinnerView(child: child)
             } else {
@@ -198,13 +202,13 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         navigationController?.pushViewController(detailVC, animated: true)
     }
 
-    // Implement infinite scroll
+    // Implement infinite scroll, maybe we can use tableview delegate methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - scrollView.frame.size.height) {
-            guard !MovieManager.shared.isFetching else {
+             guard !NetworkManager.shared.isFetching else {
                 return
-            }
+             }
 
             if isFiltering && filteredMovies.count > 0 && !isResponseEmpty {
                 searchMoviesAndUpdate(pageNumber: filteredPageNumber, query: query)

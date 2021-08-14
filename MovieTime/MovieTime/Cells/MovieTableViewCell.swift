@@ -30,13 +30,7 @@ class MovieTableViewCell: UITableViewCell {
         super.prepareForReuse()
 
         favoriteIcon.isHidden = true
-    }
-
-    func resetContents() {
-        posterImageView.image = UIImage(named: "placeholder")
-        titleLabel.text = ""
-        ratingLabel.text = ""
-        dateLabel.text = ""
+        posterImageView.image = nil
     }
 
     func configure(with movie: Movie, favorites: [FavoriteMovie]) {
