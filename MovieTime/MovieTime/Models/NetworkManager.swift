@@ -9,6 +9,7 @@ import Foundation
 import Alamofire
 
 class NetworkManager {
+
     var isFetching = false
 
     static let shared = NetworkManager()

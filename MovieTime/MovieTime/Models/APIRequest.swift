@@ -36,18 +36,11 @@ enum APIRequest: URLRequestConvertible {
         return .queryString
     }
 
-    var languageCode: String {
-        return Locale.current.languageCode ?? "en"
-    }
-
-    func asURLRequest() throws -> URLRequest {
-        guard let safeUrl = APIRequest.endpoint?.appendingPathComponent(path) else { throw URLError.urlError("Error during URL init") }
-        var request = URLRequest(url: safeUrl)
-        request.httpMethod = method.rawValue
-
+    var parameters: Parameters {
         var parameters = Parameters()
+
         parameters["api_key"] = APIRequest.apiKey
-        parameters["language"] = languageCode
+        parameters["language"] = Locale.current.languageCode ?? "en"
 
         switch self {
         case .getPopularMovies(let pageNumber):
@@ -59,7 +52,16 @@ enum APIRequest: URLRequestConvertible {
             break
         }
 
+        return parameters
+    }
+
+    func asURLRequest() throws -> URLRequest {
+        guard let safeUrl = APIRequest.endpoint?.appendingPathComponent(path) else { throw URLError.urlError("Error during URL init") }
+        var request = URLRequest(url: safeUrl)
+
+        request.httpMethod = method.rawValue
         request = try encoding.encode(request, with: parameters)
+
         return request
     }
 

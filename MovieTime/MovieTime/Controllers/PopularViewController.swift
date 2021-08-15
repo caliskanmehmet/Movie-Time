@@ -47,21 +47,26 @@ class PopularViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        if let data = UserDefaults.standard.value(forKey: "favorites") as? Data {
-            favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
-        }
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moviesChanged),
+                                               name: .moviesChanged,
+                                               object: nil)
+
+        favoriteMovies = FavoriteMovieManager.shared.favoriteMovies
 
         getMoviesAndUpdate(pageNumber: pageNumber)
         initializeSearchController()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if let data = UserDefaults.standard.value(forKey: "favorites") as? Data {
-            favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
+    @objc private func moviesChanged(_ notification: Notification) {
+        guard let items = notification.object as? [FavoriteMovie] else {
+            let object = notification.object as Any
+            assertionFailure("Invalid object: \(object)")
+            return
         }
+
+        favoriteMovies = items
         tableView.reloadData()
     }
 
@@ -258,14 +263,11 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
                 print("Error during ID fetching")
             }
 
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey: "favorites")
-
             // Reset state
             success(true)
 
             Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
-                // tableView.reloadRows(at: [indexPath], with: .automatic)
-                self.tableView.reloadData()
+                FavoriteMovieManager.shared.saveFavoriteMovies(movies: self.favoriteMovies)
             }
 
         })
@@ -288,14 +290,11 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
                 print("Error during ID fetching")
             }
 
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey: "favorites")
-
             // Reset state
             success(true)
 
             Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
-                // tableView.reloadRows(at: [indexPath], with: .automatic)
-                self.tableView.reloadData()
+                FavoriteMovieManager.shared.saveFavoriteMovies(movies: self.favoriteMovies)
             }
 
         })

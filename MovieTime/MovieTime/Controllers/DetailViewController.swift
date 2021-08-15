@@ -52,15 +52,21 @@ class DetailViewController: UIViewController {
 
     var movieId: Int?
     var movie: Movie?
-    var favoriteMovies: [FavoriteMovie]?
+    var favoriteMovies: [FavoriteMovie] = []
     let genreCellId = "GenreCollectionViewCell"
     let companyCellId = "CompanyCollectionViewCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        fetchMovieDetails()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moviesChanged),
+                                               name: .moviesChanged,
+                                               object: nil)
 
+        favoriteMovies = FavoriteMovieManager.shared.favoriteMovies
+
+        fetchMovieDetails()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -68,6 +74,20 @@ class DetailViewController: UIViewController {
 
         mainScrollView.flashScrollIndicators()
         genreCollectionView.flashScrollIndicators()
+    }
+
+    @objc private func moviesChanged(_ notification: Notification) {
+        guard let items = notification.object as? [FavoriteMovie] else {
+            let object = notification.object as Any
+            assertionFailure("Invalid object: \(object)")
+            return
+        }
+
+        favoriteMovies = items
+
+        if let safeMovie = movie {
+            addFavoriteButton(with: safeMovie)
+        }
     }
 
     private func fetchMovieDetails() {
@@ -105,14 +125,37 @@ class DetailViewController: UIViewController {
     }
 
     private func addFavoriteButton(with movie: Movie) {
-        if let safeFavMovies = favoriteMovies, let safeId = movie.id {
-            if safeFavMovies.contains(where: { movie in
+        if let safeId = movie.id {
+            if favoriteMovies.contains(where: { movie in
                 movie.id == safeId
             }) {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
             } else {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
             }
+        }
+    }
+
+    @objc func favoriteTapped() {
+        if let safeId = movieId {
+            if favoriteMovies.contains(where: { movie in
+                movie.id == safeId
+            }) {
+                // Unfavorite the film
+
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
+
+                if let index = favoriteMovies.firstIndex(where: {$0.id == safeId}) {
+                    self.favoriteMovies.remove(at: index)
+                }
+            } else {
+                // Favorite the film
+
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
+                favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie?.getPosterPath()))
+            }
+
+            FavoriteMovieManager.shared.saveFavoriteMovies(movies: favoriteMovies)
         }
     }
 
@@ -163,29 +206,6 @@ class DetailViewController: UIViewController {
         } else {
             imageView.hideSkeleton()
             imageView.image = UIImage(named: "placeholder")
-        }
-    }
-
-    @objc func favoriteTapped() {
-        if let safeFavMovies = favoriteMovies, let safeId = movieId {
-            if safeFavMovies.contains(where: { movie in
-                movie.id == safeId
-            }) {
-                // Unfavorite the film
-
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
-
-                if let index = safeFavMovies.firstIndex(where: {$0.id == safeId}) {
-                    self.favoriteMovies?.remove(at: index)
-                }
-            } else {
-                // Favorite the film
-
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
-                favoriteMovies?.append(FavoriteMovie(id: safeId, posterPath: movie?.getPosterPath()))
-            }
-
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.favoriteMovies), forKey: "favorites")
         }
     }
 

@@ -41,7 +41,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        // posterImageView.showGradientSkeleton()
+        posterImageView.image = nil
     }
 
 }

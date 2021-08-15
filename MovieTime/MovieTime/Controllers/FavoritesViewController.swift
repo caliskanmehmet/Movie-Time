@@ -21,20 +21,23 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        if let data = UserDefaults.standard.value(forKey: "favorites") as? Data {
-            favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
-        }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moviesChanged),
+                                               name: .moviesChanged,
+                                               object: nil)
+
+        favoriteMovies = FavoriteMovieManager.shared.favoriteMovies
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if let data = UserDefaults.standard.value(forKey: "favorites") as? Data {
-            favoriteMovies = (try? PropertyListDecoder().decode(Array<FavoriteMovie>.self, from: data)) ?? []
-            favoriteCollectionView.reloadData()
+    @objc private func moviesChanged(_ notification: Notification) {
+        guard let items = notification.object as? [FavoriteMovie] else {
+            let object = notification.object as Any
+            assertionFailure("Invalid object: \(object)")
+            return
         }
 
+        favoriteMovies = items
+        favoriteCollectionView.reloadData()
     }
 
 }
