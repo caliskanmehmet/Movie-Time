@@ -165,12 +165,12 @@ class DetailViewController: UIViewController {
         if let runtime = movie.runtime {
             if runtime != 0 {
                 let runtimeTuple = minutesToHoursMinutes(minutes: runtime)
-                runtimeString = String(format: NSLocalizedString("movie_duration", comment: ""), runtimeTuple.0, runtimeTuple.1)
+                runtimeString = String(format: Constants.MOVIE_DURATION, runtimeTuple.0, runtimeTuple.1)
             }
         }
 
         let budgetString = movie.getBudget()
-        let voteString = String(format: NSLocalizedString("votes", comment: ""), movie.getVoteCount())
+        let voteString = String(format: Constants.VOTES, movie.getVoteCount())
 
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.text = "􀋃  \(movie.getRating()) (\(voteString))"
@@ -240,8 +240,8 @@ class DetailViewController: UIViewController {
     }
 
     private func showAlertMessage(error: Error) {
-        let title = NSLocalizedString("error", comment: "Error")
-        let actionTitle = NSLocalizedString("OK", comment: "OK")
+        let title = Constants.ERROR
+        let actionTitle = Constants.OK
 
         let alert = UIAlertController(title: title, message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
 

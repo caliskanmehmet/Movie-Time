@@ -12,5 +12,6 @@
 "unfavorite" = "Favorilerden Kaldır";
 "warning" = "Uyarı";
 "no_movie" = "Belirtilen isimde bir film bulunamadı!";
+"no_favorite_movie" = "Gösterilecek favori bir film yok.\n\nLütfen burada görüntüleyebilmek için filmleri favorileyin.\n\n 🙁";
 "OK" = "Tamam";
 "error" = "Hata";

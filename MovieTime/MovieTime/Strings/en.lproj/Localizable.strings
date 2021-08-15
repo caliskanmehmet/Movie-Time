@@ -12,5 +12,6 @@
 "unfavorite" = "Unfavorite";
 "warning" = "Warning";
 "no_movie" = "No movie available with the given title!";
+"no_favorite_movie" = "There are no favorite movies to show.\n\nPlease favorite some films to see them here.\n\n 🙁";
 "OK" = "OK";
 "error" = "Error";

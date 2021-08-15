@@ -131,9 +131,9 @@ class PopularViewController: UIViewController {
 
                         self?.filteredPageNumber += 1
                     } else if movies.count == 0 && self?.filteredMovies.count == 0 {
-                        let warning = NSLocalizedString("warning", comment: "Warning")
-                        let message = NSLocalizedString("no_movie", comment: "No movie available!")
-                        let actionTitle = NSLocalizedString("OK", comment: "OK")
+                        let warning = Constants.WARNING
+                        let message = Constants.NO_MOVIE
+                        let actionTitle = Constants.OK
 
                         let alert = UIAlertController(title: warning, message: message, preferredStyle: UIAlertController.Style.alert)
 
@@ -207,6 +207,10 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         navigationController?.pushViewController(detailVC, animated: true)
     }
 
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 175.0
+    }
+
     // Implement infinite scroll, maybe we can use tableview delegate methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
@@ -250,7 +254,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     private func getFavoriteAction(indexPath: IndexPath) -> UIContextualAction {
-        let title = NSLocalizedString("favorite", comment: "Favorite")
+        let title = Constants.FAVORITE
 
         let favoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call favorite action
@@ -276,7 +280,7 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     private func getUnfavoriteAction(indexPath: IndexPath) -> UIContextualAction {
-        let title = NSLocalizedString("unfavorite", comment: "Unfavorite")
+        let title = Constants.UNFAVORITE
 
         let unfavoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             // Call unfavorite action
@@ -303,8 +307,8 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     }
 
     private func showAlertMessage(error: Error) {
-        let title = NSLocalizedString("error", comment: "Error")
-        let actionTitle = NSLocalizedString("OK", comment: "OK")
+        let title = Constants.ERROR
+        let actionTitle = Constants.OK
 
         let alert = UIAlertController(title: title, message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
 

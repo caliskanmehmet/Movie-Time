@@ -16,7 +16,11 @@ class FavoritesViewController: UIViewController {
     }
 
     let cellId = "FavoriteCollectionViewCell"
-    var favoriteMovies: [FavoriteMovie] = []
+    var favoriteMovies: [FavoriteMovie] = [] {
+        didSet {
+            favoriteCollectionView.backgroundView?.alpha = favoriteMovies.count > 0 ? 1.0 : 0.0
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,13 @@ class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+        if favoriteMovies.count == 0 {
+            collectionView.setEmptyMessage(Constants.NO_FAVORITE_MOVIE)
+        } else {
+            collectionView.restore()
+        }
+
         return favoriteMovies.count
     }
 
