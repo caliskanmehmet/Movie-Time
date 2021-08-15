@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 import Kingfisher
 
 class DetailViewController: UIViewController {
@@ -34,6 +35,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var basicInfoView: UIView!
     @IBOutlet weak var genreView: UIView!
     @IBOutlet weak var companyView: UIView!
+    @IBOutlet weak var websiteView: UIView!
+
+    @IBOutlet weak var visitButton: UIButton!
 
     @IBOutlet weak var overviewTextView: UITextView!
     @IBOutlet weak var topStackView: UIStackView!
@@ -110,6 +114,10 @@ class DetailViewController: UIViewController {
     func initializeContent() {
         guard let safeMovie = movie else { return }
 
+        if safeMovie.homepage == nil || safeMovie.homepage == "" {
+            visitButton.isEnabled = false
+        }
+
         addFavoriteButton(with: safeMovie)
         setLabelTexts(with: safeMovie)
 
@@ -119,6 +127,7 @@ class DetailViewController: UIViewController {
         overviewView.addSeparator(at: .bottom, color: .systemGray)
         overviewView.addSeparator(at: .top, color: .systemGray)
         companyView.addSeparator(at: .top, color: .systemGray)
+        websiteView.addSeparator(at: .top, color: .systemGray)
 
         genreCollectionView.reloadData()
         companyCollectionView.reloadData()
@@ -159,6 +168,18 @@ class DetailViewController: UIViewController {
         }
     }
 
+    @IBAction func visitButtonTapped(_ sender: Any) {
+        if let homepage = movie?.homepage {
+            if let url = URL(string: homepage) {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let vc = SFSafariViewController(url: url, configuration: config)
+                present(vc, animated: true)
+            }
+        }
+    }
+
     private func setLabelTexts(with movie: Movie) {
         var runtimeString = " - "
 
@@ -184,7 +205,6 @@ class DetailViewController: UIViewController {
     }
 
     private func downloadAndSetImage(with urlString: String?, imageView: UIImageView) {
-        // imageView.showAnimatedSkeleton()
 
         let processor = DownsamplingImageProcessor(size: imageView.frame.size)
 

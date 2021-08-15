@@ -7,3 +7,9 @@
 
 /* Class = "UILabel"; text = "Production Companies"; ObjectID = "HBZ-bG-ZWV"; */
 "HBZ-bG-ZWV.text" = "Production Companies";
+
+/* Class = "UILabel"; text = "Movie Homepage"; ObjectID = "zOc-Ae-CRU"; */
+"zOc-Ae-CRU.text" = "Movie Homepage";
+
+/* Class = "UIButton"; text = "Visit"; ObjectID = "yZL-kC-HYb"; */
+"yZL-kC-HYb.title" = "Visit";

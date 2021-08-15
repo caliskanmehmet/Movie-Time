@@ -74,6 +74,7 @@
 		6F72AFDE26C53E7B00CA5F96 /* CompanyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompanyCollectionViewCell.xib; sourceTree = "<group>"; };
 		6F7A567A26B94B500014496B /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		6F8F350326C2A3FB00E64176 /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
+		6FC2705626C936F60059DA5B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		6FCDAF6C26B43A350096B5EC /* MovieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResult.swift; sourceTree = "<group>"; };
 		6FCDAF7026B443680096B5EC /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		6FCDAF7326B444E90096B5EC /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
@@ -233,6 +234,7 @@
 		CA53828064B1248BCC95E07B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6FC2705626C936F60059DA5B /* WebKit.framework */,
 				5F3DE62C5200B55786478E38 /* Pods_MovieTime.framework */,
 			);
 			name = Frameworks;

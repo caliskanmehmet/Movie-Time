@@ -58,6 +58,7 @@ enum APIRequest: URLRequestConvertible {
     func asURLRequest() throws -> URLRequest {
         guard let safeUrl = APIRequest.endpoint?.appendingPathComponent(path) else { throw URLError.urlError("Error during URL init") }
         var request = URLRequest(url: safeUrl)
+        request.timeoutInterval = 30
 
         request.httpMethod = method.rawValue
         request = try encoding.encode(request, with: parameters)

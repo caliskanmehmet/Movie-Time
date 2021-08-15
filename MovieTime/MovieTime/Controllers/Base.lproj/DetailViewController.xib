@@ -31,6 +31,8 @@
                 <outlet property="titleLabel" destination="OsF-95-i8c" id="maO-6t-PG0"/>
                 <outlet property="topStackView" destination="Kxh-ms-X07" id="sx2-Hf-8r2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="visitButton" destination="yZL-kC-HYb" id="INW-Mw-QI7"/>
+                <outlet property="websiteView" destination="28s-an-P8Y" id="dDn-ym-Grg"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -42,7 +44,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNg-au-Bkx" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="998.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="1058.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Kxh-ms-X07">
                                     <rect key="frame" x="8" y="8" width="398" height="53.5"/>
@@ -301,20 +303,54 @@
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                     </userDefinedRuntimeAttributes>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="28s-an-P8Y" userLabel="Website View">
+                                    <rect key="frame" x="8" y="1010.5" width="398" height="40"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Homepage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOc-Ae-CRU">
+                                            <rect key="frame" x="0.0" y="10" width="136.5" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yZL-kC-HYb">
+                                            <rect key="frame" x="329.5" y="5" width="68.5" height="30"/>
+                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                            <state key="normal" title="Visit"/>
+                                            <connections>
+                                                <action selector="visitButtonTapped:" destination="-1" eventType="touchUpInside" id="l8M-9b-nvX"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="yZL-kC-HYb" secondAttribute="trailing" id="8l4-6X-Ss2"/>
+                                        <constraint firstItem="zOc-Ae-CRU" firstAttribute="leading" secondItem="28s-an-P8Y" secondAttribute="leading" id="Daj-i1-dce"/>
+                                        <constraint firstAttribute="bottom" secondItem="yZL-kC-HYb" secondAttribute="bottom" constant="5" id="Fr1-7g-Dhz"/>
+                                        <constraint firstAttribute="bottom" secondItem="zOc-Ae-CRU" secondAttribute="bottom" constant="10" id="Tkd-fv-rfU"/>
+                                        <constraint firstItem="yZL-kC-HYb" firstAttribute="leading" relation="lessThanOrEqual" secondItem="zOc-Ae-CRU" secondAttribute="trailing" constant="193" id="XpA-iQ-O86"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zOc-Ae-CRU" secondAttribute="trailing" constant="20" symbolic="YES" id="Xqm-UM-iwx"/>
+                                        <constraint firstItem="zOc-Ae-CRU" firstAttribute="top" secondItem="28s-an-P8Y" secondAttribute="top" constant="10" id="id8-6c-df8"/>
+                                        <constraint firstItem="yZL-kC-HYb" firstAttribute="top" secondItem="28s-an-P8Y" secondAttribute="top" constant="5" id="oc3-ac-gHP"/>
+                                        <constraint firstAttribute="height" constant="40" id="t0P-7l-1Hj"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="3x3-7k-DIK" firstAttribute="top" secondItem="Kxh-ms-X07" secondAttribute="bottom" constant="8" id="0C6-3C-e5x"/>
+                                <constraint firstAttribute="trailing" secondItem="28s-an-P8Y" secondAttribute="trailing" constant="8" id="0KF-Hz-byO"/>
                                 <constraint firstItem="LSA-HD-3Bv" firstAttribute="leading" secondItem="rNg-au-Bkx" secondAttribute="leading" constant="8" id="2MM-dT-ciw"/>
+                                <constraint firstAttribute="bottom" secondItem="28s-an-P8Y" secondAttribute="bottom" constant="8" id="3ON-hu-zPF"/>
+                                <constraint firstItem="28s-an-P8Y" firstAttribute="top" secondItem="TCt-R1-Uiy" secondAttribute="bottom" constant="20" id="41b-un-niB"/>
                                 <constraint firstItem="3x3-7k-DIK" firstAttribute="leading" secondItem="rNg-au-Bkx" secondAttribute="leading" id="AVl-jg-x2y"/>
                                 <constraint firstItem="Kxh-ms-X07" firstAttribute="top" secondItem="rNg-au-Bkx" secondAttribute="top" constant="8" id="KWB-bO-Hxe"/>
                                 <constraint firstItem="Kxh-ms-X07" firstAttribute="leading" secondItem="rNg-au-Bkx" secondAttribute="leading" constant="8" id="Th1-cs-iuh"/>
-                                <constraint firstAttribute="bottom" secondItem="TCt-R1-Uiy" secondAttribute="bottom" constant="8" id="W6L-dY-3PC"/>
                                 <constraint firstAttribute="trailing" secondItem="ego-tZ-ss2" secondAttribute="trailing" id="eHv-EW-BR0"/>
                                 <constraint firstAttribute="trailing" secondItem="TCt-R1-Uiy" secondAttribute="trailing" constant="8" id="eso-fE-YUw"/>
                                 <constraint firstItem="TCt-R1-Uiy" firstAttribute="top" secondItem="ego-tZ-ss2" secondAttribute="bottom" constant="8" id="fwI-A9-dq9"/>
                                 <constraint firstAttribute="trailing" secondItem="3x3-7k-DIK" secondAttribute="trailing" id="i6X-yu-LKM"/>
                                 <constraint firstAttribute="trailing" secondItem="JVf-Tk-HZC" secondAttribute="trailing" constant="12" id="igM-mi-3xN"/>
+                                <constraint firstItem="28s-an-P8Y" firstAttribute="leading" secondItem="rNg-au-Bkx" secondAttribute="leading" constant="8" id="m4g-lx-TNJ"/>
                                 <constraint firstAttribute="trailing" secondItem="LSA-HD-3Bv" secondAttribute="trailing" constant="8" id="ncV-fT-EMO"/>
                                 <constraint firstItem="TCt-R1-Uiy" firstAttribute="leading" secondItem="rNg-au-Bkx" secondAttribute="leading" constant="8" id="rIv-Ap-32i"/>
                                 <constraint firstAttribute="trailing" secondItem="Kxh-ms-X07" secondAttribute="trailing" constant="8" id="rny-6o-SnB"/>
