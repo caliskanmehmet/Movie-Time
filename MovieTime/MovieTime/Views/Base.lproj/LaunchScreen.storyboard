@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,25 +16,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="light_background" translatesAutoresizingMaskIntoConstraints="NO" id="tJU-tg-F7T">
-                                <rect key="frame" x="0.0" y="-10" width="414" height="906"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="tJU-tg-F7T">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MovieTime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjQ-W0-GTe">
-                                <rect key="frame" x="146.5" y="433" width="121.5" height="30"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                <rect key="frame" x="154.5" y="435" width="105" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.8341829181" green="0.30245351790000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.7197540402" green="0.083614848549999995" blue="0.98304814100000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="mjQ-W0-GTe" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4sj-IG-QEj"/>
                             <constraint firstAttribute="bottom" secondItem="tJU-tg-F7T" secondAttribute="bottom" id="8Mm-C5-Dda"/>
                             <constraint firstItem="tJU-tg-F7T" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="IgQ-jX-JEY"/>
                             <constraint firstItem="mjQ-W0-GTe" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="VcY-RJ-K2E"/>
                             <constraint firstItem="tJU-tg-F7T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="WF2-pg-nIu"/>
-                            <constraint firstItem="tJU-tg-F7T" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="-10" id="nnh-2z-aRk"/>
+                            <constraint firstItem="tJU-tg-F7T" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="nnh-2z-aRk"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -45,9 +45,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="light_background" width="662" height="662"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="logo" width="214" height="213"/>
     </resources>
 </document>

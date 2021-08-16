@@ -118,6 +118,14 @@ class DetailViewController: UIViewController {
             visitButton.isEnabled = false
         }
 
+        if safeMovie.genres?.count == 0 {
+            genreCollectionView.setEmptyMessage(Constants.NO_GENRE)
+        }
+
+        if safeMovie.productionCompanies?.count == 0 {
+            companyCollectionView.setEmptyMessage(Constants.NO_COMPANY)
+        }
+
         addFavoriteButton(with: safeMovie)
         setLabelTexts(with: safeMovie)
 
@@ -201,7 +209,16 @@ class DetailViewController: UIViewController {
 
         titleLabel.text = movie.title
         releaseYearLabel.text = "\(movie.originalTitle ?? " - ") • \(movie.releaseDate?[0..<4] ?? " - ") • \(movie.originalLanguage ?? " - ")"
-        overviewTextView.text = movie.overview ?? " - "
+
+        if let overview = movie.overview {
+            if overview != "" {
+                overviewTextView.text = overview
+            } else {
+                overviewTextView.textAlignment = .center
+                overviewTextView.font = UIFont.systemFont(ofSize: 20)
+                overviewTextView.text = Constants.NO_OVERVIEW
+            }
+        }
     }
 
     private func downloadAndSetImage(with urlString: String?, imageView: UIImageView) {

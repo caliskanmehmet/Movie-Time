@@ -17,4 +17,7 @@ struct Constants {
     static let NO_FAVORITE_MOVIE =  NSLocalizedString("no_favorite_movie", comment: "")
     static let OK =  NSLocalizedString("OK", comment: "")
     static let ERROR =  NSLocalizedString("error", comment: "")
+    static let NO_OVERVIEW =  NSLocalizedString("no_overview", comment: "")
+    static let NO_GENRE =  NSLocalizedString("no_genre", comment: "")
+    static let NO_COMPANY =  NSLocalizedString("no_company", comment: "")
 }
