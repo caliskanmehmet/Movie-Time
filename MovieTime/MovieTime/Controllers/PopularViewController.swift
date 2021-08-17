@@ -4,13 +4,13 @@
 //
 //  Created by obss on 30.07.2021.
 //
-//  Add Sort button
 
 import UIKit
 import SkeletonView
 
 class PopularViewController: UIViewController {
     let movieCellId = "MovieTableViewCell"
+    let updateTimeInterval = 0.6
     var pageNumber = 1
     var filteredPageNumber = 1
 
@@ -29,7 +29,7 @@ class PopularViewController: UIViewController {
     }
 
     var isFiltering: Bool {
-        return (searchController.isActive && !isSearchBarEmpty) || filteredMovies.count > 0
+        return searchController.isActive && !isSearchBarEmpty
     }
 
     var isResponseEmpty = false
@@ -94,7 +94,7 @@ class PopularViewController: UIViewController {
                     self?.pageNumber += 1
                 }
             case .failure(let error):
-                self?.showAlertMessage(error: error)
+                self?.showAlertMessage(errorDescription: error.localizedDescription)
             }
         }
     }
@@ -115,6 +115,7 @@ class PopularViewController: UIViewController {
                 self?.hideSpinnerView(child: child)
             } else {
                 self?.tableView.tableFooterView = nil // Remove the spinner footer
+                self?.tableView.tableFooterView = UIView(frame: .zero) // Remove seperators for empty rows
             }
 
             switch response {
@@ -130,23 +131,16 @@ class PopularViewController: UIViewController {
                         }
 
                         self?.filteredPageNumber += 1
-                    } else if movies.count == 0 && self?.filteredMovies.count == 0 {
-                        let warning = Constants.WARNING
-                        let message = Constants.NO_MOVIE
-                        let actionTitle = Constants.OK
-
-                        let alert = UIAlertController(title: warning, message: message, preferredStyle: UIAlertController.Style.alert)
-
-                        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
-
-                        self?.present(alert, animated: true, completion: nil)
-                        self?.isResponseEmpty = true
                     } else {
+                        if movies.count == 0 && self?.filteredMovies.count == 0 {
+                            let message = Constants.NO_MOVIE
+                            self?.showAlertMessage(errorDescription: message)
+                        }
                         self?.isResponseEmpty = true
                     }
                 }
             case .failure(let error):
-                self?.showAlertMessage(error: error)
+                self?.showAlertMessage(errorDescription: error.localizedDescription)
             }
         }
     }
@@ -166,6 +160,93 @@ class PopularViewController: UIViewController {
     private func scrollToTop() {
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+    }
+
+    private func showAlertMessage(errorDescription: String) {
+        let title = Constants.ERROR
+        let actionTitle = Constants.OK
+
+        let alert = UIAlertController(title: title, message: errorDescription, preferredStyle: UIAlertController.Style.alert)
+
+        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
+
+        // Avoid "is already presenting" and "present from detached VC" warning
+        self.view.window?.rootViewController?.present(alert, animated: true, completion: nil)
+
+    }
+
+    private func showSpinnerView(child: SpinnerViewController) {
+        self.addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+
+    private func hideSpinnerView(child: SpinnerViewController) {
+        child.willMove(toParent: nil)
+        child.view.removeFromSuperview()
+        child.removeFromParent()
+    }
+
+    private func getFavoriteAction(indexPath: IndexPath) -> UIContextualAction {
+        let title = Constants.FAVORITE
+
+        let favoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
+            // Call favorite action
+            let movieArray = self.getMovieArray()
+
+            let movie = movieArray[indexPath.row]
+            if let safeId = movie.id {
+                self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
+            } else {
+                print("Error during ID fetching")
+            }
+
+            // Reset state
+            success(true)
+
+            Timer.scheduledTimer(withTimeInterval: self.updateTimeInterval, repeats: false) { _ in
+                FavoriteMovieManager.shared.saveFavoriteMovies(movies: self.favoriteMovies)
+            }
+
+        })
+
+        return favoriteAction
+    }
+
+    private func getUnfavoriteAction(indexPath: IndexPath) -> UIContextualAction {
+        let title = Constants.UNFAVORITE
+
+        let unfavoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
+            // Call unfavorite action
+            let movieArray = self.getMovieArray()
+
+            if let safeId = movieArray[indexPath.row].id {
+                if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
+                    self.favoriteMovies.remove(at: index)
+                }
+            } else {
+                print("Error during ID fetching")
+            }
+
+            // Reset state
+            success(true)
+
+            Timer.scheduledTimer(withTimeInterval: self.updateTimeInterval, repeats: false) { _ in
+                FavoriteMovieManager.shared.saveFavoriteMovies(movies: self.favoriteMovies)
+            }
+
+        })
+
+        return unfavoriteAction
+    }
+
+    private func getMovieArray() -> [Movie] {
+        if isFiltering && filteredMovies.count > 0 {
+            return filteredMovies
+        } else {
+            return movies
+        }
     }
 
 }
@@ -254,94 +335,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         return UISwipeActionsConfiguration(actions: [])
     }
 
-    private func getFavoriteAction(indexPath: IndexPath) -> UIContextualAction {
-        let title = Constants.FAVORITE
-
-        let favoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            // Call favorite action
-            let movieArray = self.getMovieArray()
-
-            let movie = movieArray[indexPath.row]
-            if let safeId = movie.id {
-                self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
-            } else {
-                print("Error during ID fetching")
-            }
-
-            // Reset state
-            success(true)
-
-            Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
-                FavoriteMovieManager.shared.saveFavoriteMovies(movies: self.favoriteMovies)
-            }
-
-        })
-
-        return favoriteAction
-    }
-
-    private func getUnfavoriteAction(indexPath: IndexPath) -> UIContextualAction {
-        let title = Constants.UNFAVORITE
-
-        let unfavoriteAction = UIContextualAction(style: .normal, title: title, handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            // Call unfavorite action
-            let movieArray = self.getMovieArray()
-
-            if let safeId = movieArray[indexPath.row].id {
-                if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
-                    self.favoriteMovies.remove(at: index)
-                }
-            } else {
-                print("Error during ID fetching")
-            }
-
-            // Reset state
-            success(true)
-
-            Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
-                FavoriteMovieManager.shared.saveFavoriteMovies(movies: self.favoriteMovies)
-            }
-
-        })
-
-        return unfavoriteAction
-    }
-
-    private func showAlertMessage(error: Error) {
-        let title = Constants.ERROR
-        let actionTitle = Constants.OK
-
-        let alert = UIAlertController(title: title, message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
-
-        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
-
-        present(alert, animated: true, completion: nil)
-    }
-
-    private func getMovieArray() -> [Movie] {
-        if isFiltering {
-            return filteredMovies
-        } else {
-            return movies
-        }
-    }
-
-    private func showSpinnerView(child: SpinnerViewController) {
-        self.addChild(child)
-        child.view.frame = view.frame
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
-    }
-
-    private func hideSpinnerView(child: SpinnerViewController) {
-        child.willMove(toParent: nil)
-        child.view.removeFromSuperview()
-        child.removeFromParent()
-    }
-
 }
 
-// MARK: - UISearchResultsUpdating
+// MARK: - UISearchBarDelegate
 
 extension PopularViewController: UISearchBarDelegate {
 

@@ -16,16 +16,6 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var favoriteIcon: UIImageView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
     override func prepareForReuse() {
         super.prepareForReuse()
 
@@ -76,7 +66,6 @@ class MovieTableViewCell: UITableViewCell {
                                                                               .scaleFactor(UIScreen.main.scale),
                                                                               .cacheOriginalImage,
                                                                               .cacheSerializer(FormatIndicatedCacheSerializer.png)]) { [weak self] response in
-
                 switch response {
                 case .success(_):
                     self?.posterImageView.hideSkeleton()

@@ -36,11 +36,11 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var genreView: UIView!
     @IBOutlet weak var companyView: UIView!
     @IBOutlet weak var websiteView: UIView!
+    @IBOutlet weak var topStackView: UIStackView!
 
     @IBOutlet weak var visitButton: UIButton!
 
     @IBOutlet weak var overviewTextView: UITextView!
-    @IBOutlet weak var topStackView: UIStackView!
     @IBOutlet weak var genreCollectionView: UICollectionView! {
         didSet {
             genreCollectionView.dataSource = self
@@ -57,6 +57,7 @@ class DetailViewController: UIViewController {
     var movieId: Int?
     var movie: Movie?
     var favoriteMovies: [FavoriteMovie] = []
+
     let genreCellId = "GenreCollectionViewCell"
     let companyCellId = "CompanyCollectionViewCell"
 
@@ -114,8 +115,8 @@ class DetailViewController: UIViewController {
     func initializeContent() {
         guard let safeMovie = movie else { return }
 
-        if safeMovie.homepage == nil || safeMovie.homepage == "" {
-            visitButton.isEnabled = false
+        if safeMovie.homepage != nil && safeMovie.homepage != "" {
+            visitButton.isEnabled = true
         }
 
         if safeMovie.genres?.count == 0 {
@@ -159,7 +160,6 @@ class DetailViewController: UIViewController {
                 movie.id == safeId
             }) {
                 // Unfavorite the film
-
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.outlined"), style: .plain, target: self, action: #selector(favoriteTapped))
 
                 if let index = favoriteMovies.firstIndex(where: {$0.id == safeId}) {
@@ -167,7 +167,6 @@ class DetailViewController: UIViewController {
                 }
             } else {
                 // Favorite the film
-
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "heart.slash"), style: .plain, target: self, action: #selector(favoriteTapped))
                 favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie?.getPosterPath()))
             }
@@ -227,8 +226,8 @@ class DetailViewController: UIViewController {
 
         if let safeUrl = urlString {
             imageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
-                                                                              .scaleFactor(UIScreen.main.scale),
-                                                                              .cacheOriginalImage]) { response in
+                                                                        .scaleFactor(UIScreen.main.scale),
+                                                                        .cacheOriginalImage]) { response in
 
                 switch response {
                 case .success(_):
@@ -251,17 +250,17 @@ class DetailViewController: UIViewController {
     }
 
     private func showSkeletons() {
-        posterImageView.showGradientSkeleton()
-        backdropImageView.showGradientSkeleton()
-        runtimeLabel.showGradientSkeleton()
-        budgetLabel.showGradientSkeleton()
-        titleLabel.showGradientSkeleton()
-        releaseYearLabel.showGradientSkeleton()
-        overviewTextView.showGradientSkeleton()
-        dateLabel.showGradientSkeleton()
-        ratingLabel.showGradientSkeleton()
-        revenueLabel.showGradientSkeleton()
-        genreCollectionView.showGradientSkeleton()
+        posterImageView.showAnimatedSkeleton()
+        backdropImageView.showAnimatedSkeleton()
+        runtimeLabel.showAnimatedSkeleton()
+        budgetLabel.showAnimatedSkeleton()
+        titleLabel.showAnimatedSkeleton()
+        releaseYearLabel.showAnimatedSkeleton()
+        overviewTextView.showAnimatedSkeleton()
+        dateLabel.showAnimatedSkeleton()
+        ratingLabel.showAnimatedSkeleton()
+        revenueLabel.showAnimatedSkeleton()
+        genreCollectionView.showAnimatedSkeleton()
     }
 
     private func hideSkeletons() {
@@ -282,9 +281,12 @@ class DetailViewController: UIViewController {
 
         let alert = UIAlertController(title: title, message: error.localizedDescription.description, preferredStyle: UIAlertController.Style.alert)
 
-        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: { (_) in
+            alert.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+        }))
 
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
