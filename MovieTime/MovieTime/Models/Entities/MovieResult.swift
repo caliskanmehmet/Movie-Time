@@ -26,6 +26,7 @@ struct Movie: Codable, Identifiable {
     let originalTitle: String?
     let originalLanguage: String?
     let title: String?
+    let tagline: String?
     let backdropPath: String?
     let popularity: Float?
     let productionCompanies: [ProductionCompany]?

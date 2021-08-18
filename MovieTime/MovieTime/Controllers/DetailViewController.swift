@@ -57,13 +57,13 @@ class DetailViewController: UIViewController {
         }
     }
 
+    let genreCellId = "GenreCollectionViewCell"
+    let companyCellId = "CompanyCollectionViewCell"
+
     var movieId: Int?
     var movie: Movie?
     var movieTitle: String?
     var favoriteMovies: [FavoriteMovie] = []
-
-    let genreCellId = "GenreCollectionViewCell"
-    let companyCellId = "CompanyCollectionViewCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -222,31 +222,17 @@ class DetailViewController: UIViewController {
                 overviewTextView.text = Constants.NO_OVERVIEW
             }
         }
+
+        if let tagline = movie.tagline {
+            if tagline != "" {
+                overviewTextView.text.append("\n\n\"\(tagline)\"")
+            }
+        }
     }
 
     private func downloadAndSetImage(with urlString: String?, imageView: UIImageView) {
-
         let processor = DownsamplingImageProcessor(size: imageView.frame.size)
-
-        if let safeUrl = urlString {
-            imageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
-                                                                        .scaleFactor(UIScreen.main.scale),
-                                                                        .cacheOriginalImage]) { response in
-
-                switch response {
-                case .success(_):
-                    imageView.hideSkeleton()
-                case .failure(let error):
-                    if !error.isTaskCancelled && !error.isNotCurrentTask {
-                        imageView.hideSkeleton()
-                        imageView.image = UIImage(named: "placeholder")
-                    }
-                }
-            }
-        } else {
-            imageView.hideSkeleton()
-            imageView.image = UIImage(named: "placeholder")
-        }
+        imageView.setImage(urlString: urlString, processor: processor)
     }
 
     private func minutesToHoursMinutes(minutes: Int) -> (Int, Int) {
@@ -320,7 +306,12 @@ extension DetailViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: companyCellId, for: indexPath) as? CompanyCollectionViewCell
 
             if let safeCell = cell {
-                safeCell.configure(with: movie?.productionCompanies?[indexPath.row])
+                let companies = movie?.productionCompanies
+
+               // print(indexPath.row)
+                let isLastCell = (indexPath.row + 1) == companies?.count
+                safeCell.configure(with: companies?[indexPath.row], isLastCell: isLastCell)
+
                 return safeCell
             } else {
                 return UICollectionViewCell()

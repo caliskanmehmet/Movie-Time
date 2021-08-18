@@ -12,7 +12,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
         genreLabel.adjustsFontSizeToFitWidth = true
 
         self.layer.cornerRadius = 12

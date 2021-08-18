@@ -44,12 +44,9 @@ class MovieTableViewCell: UITableViewCell {
         ratingLabel.showGradientSkeleton()
         dateLabel.showGradientSkeleton()
 
-        titleLabel.text = movie.title // 􀉉􀉉
-        // dateLabel.text = "􀒏 \(movie.getReleaseDate())"
-
+        titleLabel.text = movie.title
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.text = "􀋃 \(movie.getRating())"
-        // ratingLabel.addLeading(image: UIImage(named: "star.fill") ?? UIImage(), text: " \(movie.getRating())")
 
         titleLabel.hideSkeleton()
         ratingLabel.hideSkeleton()
@@ -57,29 +54,8 @@ class MovieTableViewCell: UITableViewCell {
     }
 
     private func downloadAndSetPosterImage(with movie: Movie) {
-        posterImageView.showAnimatedSkeleton()
-
         let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
-
-        if let safeUrl = movie.getPosterPath() {
-            posterImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),
-                                                                              .scaleFactor(UIScreen.main.scale),
-                                                                              .cacheOriginalImage,
-                                                                              .cacheSerializer(FormatIndicatedCacheSerializer.png)]) { [weak self] response in
-                switch response {
-                case .success(_):
-                    self?.posterImageView.hideSkeleton()
-                case .failure(let error):
-                    if !error.isTaskCancelled && !error.isNotCurrentTask {
-                        self?.posterImageView.hideSkeleton()
-                        self?.posterImageView.image = UIImage(named: "placeholder")
-                    }
-                }
-            }
-        } else {
-            posterImageView.hideSkeleton()
-            posterImageView.image = UIImage(named: "placeholder")
-        }
+        posterImageView.setImage(urlString: movie.getPosterPath(), processor: processor)
     }
 
 }

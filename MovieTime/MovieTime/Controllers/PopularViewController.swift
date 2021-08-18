@@ -9,16 +9,18 @@ import UIKit
 import SkeletonView
 
 class PopularViewController: UIViewController {
-    let movieCellId = "MovieTableViewCell"
-    let updateTimeInterval = 0.6
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
             tableView.delegate = self
             tableView.register(UINib(nibName: movieCellId, bundle: nil), forCellReuseIdentifier: movieCellId)
+            tableView.keyboardDismissMode = .onDrag
         }
     }
+
+    let movieCellId = "MovieTableViewCell"
+    let updateTimeInterval = 0.6
 
     var searchController = UISearchController(searchResultsController: nil)
 
@@ -71,7 +73,6 @@ class PopularViewController: UIViewController {
     }
 
     func initializeSearchController() {
-        // Initialize search controller
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
@@ -153,7 +154,16 @@ class PopularViewController: UIViewController {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
 
         let spinner = UIActivityIndicatorView()
-        spinner.style = .gray
+
+        switch traitCollection.userInterfaceStyle {
+        case .light, .unspecified:
+            spinner.style = .gray
+        case .dark:
+            spinner.style = .white
+        default:
+            spinner.style = .gray
+        }
+
         spinner.center = footerView.center
         footerView.addSubview(spinner)
         spinner.startAnimating()
@@ -202,8 +212,6 @@ class PopularViewController: UIViewController {
             let movie = movieArray[indexPath.row]
             if let safeId = movie.id {
                 self.favoriteMovies.append(FavoriteMovie(id: safeId, posterPath: movie.getPosterPath()))
-            } else {
-                print("Error during ID fetching")
             }
 
             // Reset state
@@ -229,8 +237,6 @@ class PopularViewController: UIViewController {
                 if let index = self.favoriteMovies.firstIndex(where: {$0.id == safeId}) {
                     self.favoriteMovies.remove(at: index)
                 }
-            } else {
-                print("Error during ID fetching")
             }
 
             // Reset state
@@ -298,20 +304,20 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
         return 175.0
     }
 
-    // Implement infinite scroll, maybe we can use tableview delegate methods
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - scrollView.frame.size.height) {
-             guard !NetworkManager.shared.isFetching else {
+    // Infinite scroll, pagination
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let numberOfRows = tableView.numberOfRows(inSection: 0)
+
+        if indexPath.row == numberOfRows - 1 {
+            guard !NetworkManager.shared.isFetching else {
                 return
-             }
+            }
 
             if isFiltering && filteredMovies.count > 0 && !isResponseEmpty {
                 searchMoviesAndUpdate(pageNumber: filteredPageNumber, query: query)
             } else if !isFiltering && movies.count > 0 {
                 getMoviesAndUpdate(pageNumber: pageNumber)
             }
-
         }
     }
 
