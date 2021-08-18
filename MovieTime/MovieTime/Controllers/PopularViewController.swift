@@ -11,8 +11,6 @@ import SkeletonView
 class PopularViewController: UIViewController {
     let movieCellId = "MovieTableViewCell"
     let updateTimeInterval = 0.6
-    var pageNumber = 1
-    var filteredPageNumber = 1
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -29,9 +27,11 @@ class PopularViewController: UIViewController {
     }
 
     var isFiltering: Bool {
-        return searchController.isActive && !isSearchBarEmpty
+        return searchController.isActive || !isSearchBarEmpty
     }
 
+    var pageNumber = 1
+    var filteredPageNumber = 1
     var isResponseEmpty = false
     var query = ""
     var oldIndexPaths: [IndexPath]?
@@ -101,8 +101,9 @@ class PopularViewController: UIViewController {
 
     func searchMoviesAndUpdate(pageNumber: Int, query: String) {
         let child = SpinnerViewController()
+        let isFirstSearch = pageNumber == 1
 
-        if filteredMovies.count == 0 {
+        if isFirstSearch {
             showSpinnerView(child: child)
         } else {
             tableView.tableFooterView = createSpinnerFooter()
@@ -111,7 +112,7 @@ class PopularViewController: UIViewController {
         let urlRequest = APIRequest.searchMovies(pageNumber: pageNumber, query: query)
 
         NetworkManager.shared.fetchData(urlRequest: urlRequest, type: MovieResult.self) { [weak self] response in
-            if self?.filteredMovies.count == 0 {
+            if isFirstSearch {
                 self?.hideSpinnerView(child: child)
             } else {
                 self?.tableView.tableFooterView = nil // Remove the spinner footer
@@ -122,6 +123,9 @@ class PopularViewController: UIViewController {
             case .success(let result):
                 if let movies = result.results {
                     if movies.count > 0 {
+                        if isFirstSearch {
+                            self?.filteredMovies = []
+                        }
                         self?.filteredMovies.append(contentsOf: movies)
 
                         self?.tableView.reloadDataThenPerform {
@@ -132,7 +136,7 @@ class PopularViewController: UIViewController {
 
                         self?.filteredPageNumber += 1
                     } else {
-                        if movies.count == 0 && self?.filteredMovies.count == 0 {
+                        if isFirstSearch {
                             let message = Constants.NO_MOVIE
                             self?.showAlertMessage(errorDescription: message)
                         }
@@ -281,8 +285,9 @@ extension PopularViewController: SkeletonTableViewDataSource, SkeletonTableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let detailVC = DetailViewController()
-        detailVC.favoriteMovies = favoriteMovies
 
+        detailVC.favoriteMovies = favoriteMovies
+        detailVC.movieTitle = getMovieArray()[indexPath.row].title
         detailVC.movieId = getMovieArray()[indexPath.row].id
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -345,26 +350,28 @@ extension PopularViewController: UISearchBarDelegate {
         isResponseEmpty = false
 
         if oldIndexPaths == nil {
-            oldIndexPaths = tableView.indexPathsForVisibleRows // FIXED This causes problem for back to back searches --> RangeException
+            oldIndexPaths = tableView.indexPathsForVisibleRows
         }
 
         filteredPageNumber = 1
 
         query = searchBar.text!
-        filteredMovies = []
         searchMoviesAndUpdate(pageNumber: filteredPageNumber, query: query)
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isResponseEmpty = false
-        filteredMovies = []
-        searchBar.text = "" // This is necessary!!!
+        searchBar.text = ""
 
-        tableView.reloadData()
+        if filteredMovies.count > 0 {
+            filteredMovies = []
 
-        DispatchQueue.main.async {
-            self.tableView.scrollToRow(at: self.oldIndexPaths?[0] ?? IndexPath(row: 0, section: 0), at: .top, animated: false)
-            self.oldIndexPaths = nil
+            tableView.reloadData()
+
+            DispatchQueue.main.async {
+                self.tableView.scrollToRow(at: self.oldIndexPaths?[0] ?? IndexPath(row: 0, section: 0), at: .top, animated: false)
+                self.oldIndexPaths = nil
+            }
         }
 
     }

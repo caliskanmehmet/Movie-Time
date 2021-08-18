@@ -35,7 +35,9 @@
                             <constraint firstItem="eoT-Ga-H5h" firstAttribute="top" secondItem="0U0-rp-q6u" secondAttribute="top" id="krL-wI-VtN"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Featured Movies" id="RQ4-1Y-TLn"/>
+                    <navigationItem key="navigationItem" title="Featured" id="RQ4-1Y-TLn">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="VlF-AE-16m"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="eoT-Ga-H5h" id="J4T-Zt-uxm"/>
                     </connections>
@@ -99,7 +101,9 @@
                             <constraint firstItem="n2N-dH-JUl" firstAttribute="leading" secondItem="jUS-iW-VpV" secondAttribute="leading" id="Z4Z-mI-IZ3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Favorite Movies" id="DuY-6g-c0D"/>
+                    <navigationItem key="navigationItem" title="Favorites" id="DuY-6g-c0D">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="KaR-S0-eXL"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="favoriteCollectionView" destination="n2N-dH-JUl" id="fhf-gq-gS2"/>
                     </connections>

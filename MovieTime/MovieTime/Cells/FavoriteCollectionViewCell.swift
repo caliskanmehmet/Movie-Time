@@ -15,7 +15,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     func configure(with movie: FavoriteMovie) {
         posterImageView.showAnimatedSkeleton()
 
-        let processor = RoundCornerImageProcessor(cornerRadius: 30) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
+        let processor = RoundCornerImageProcessor(cornerRadius: 20) |> DownsamplingImageProcessor(size: posterImageView.frame.size)
 
         if let safeUrl = movie.posterPath {
             posterImageView.kf.setImage(with: URL(string: safeUrl), options: [.processor(processor),

@@ -2,8 +2,14 @@
 /* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "5Dm-PE-hsc"; */
 "5Dm-PE-hsc.title" = "Favorites";
 
-/* Class = "UINavigationItem"; title = "Favorite Movies"; ObjectID = "DuY-6g-c0D"; */
-"DuY-6g-c0D.title" = "Favorite Movies";
+/* Class = "UINavigationItem"; title = "Favorites"; ObjectID = "DuY-6g-c0D"; */
+"DuY-6g-c0D.title" = "Favorites";
 
-/* Class = "UINavigationItem"; title = "Featured Movies"; ObjectID = "RQ4-1Y-TLn"; */
-"RQ4-1Y-TLn.title" = "Featured Movies";
+/* Class = "UINavigationItem"; title = "Featured"; ObjectID = "RQ4-1Y-TLn"; */
+"RQ4-1Y-TLn.title" = "Featured";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "VlF-AE-16m"; */
+"VlF-AE-16m.title" = "Back";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KaR-S0-eXL"; */
+"KaR-S0-eXL.title" = "Back";

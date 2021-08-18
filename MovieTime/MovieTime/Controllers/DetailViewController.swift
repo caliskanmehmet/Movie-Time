@@ -3,14 +3,17 @@
 //  MovieTime
 //
 //  Created by obss on 2.08.2021.
-//  TODO: Create a sticky header for scroll view to see movie title
 
 import UIKit
 import SafariServices
 import Kingfisher
 
 class DetailViewController: UIViewController {
-    @IBOutlet weak var mainScrollView: UIScrollView!
+    @IBOutlet weak var mainScrollView: UIScrollView! {
+        didSet {
+            mainScrollView.delegate = self
+        }
+    }
 
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var posterImageView: UIImageView!
@@ -56,6 +59,7 @@ class DetailViewController: UIViewController {
 
     var movieId: Int?
     var movie: Movie?
+    var movieTitle: String?
     var favoriteMovies: [FavoriteMovie] = []
 
     let genreCellId = "GenreCollectionViewCell"
@@ -70,6 +74,7 @@ class DetailViewController: UIViewController {
                                                object: nil)
 
         favoriteMovies = FavoriteMovieManager.shared.favoriteMovies
+        addFavoriteButton(with: movieId)
 
         fetchMovieDetails()
     }
@@ -91,7 +96,7 @@ class DetailViewController: UIViewController {
         favoriteMovies = items
 
         if let safeMovie = movie {
-            addFavoriteButton(with: safeMovie)
+            addFavoriteButton(with: safeMovie.id)
         }
     }
 
@@ -127,7 +132,6 @@ class DetailViewController: UIViewController {
             companyCollectionView.setEmptyMessage(Constants.NO_COMPANY)
         }
 
-        addFavoriteButton(with: safeMovie)
         setLabelTexts(with: safeMovie)
 
         downloadAndSetImage(with: safeMovie.getPosterPath(), imageView: posterImageView)
@@ -142,8 +146,8 @@ class DetailViewController: UIViewController {
         companyCollectionView.reloadData()
     }
 
-    private func addFavoriteButton(with movie: Movie) {
-        if let safeId = movie.id {
+    private func addFavoriteButton(with movieId: Int?) {
+        if let safeId = movieId {
             if favoriteMovies.contains(where: { movie in
                 movie.id == safeId
             }) {
@@ -295,7 +299,6 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
         if collectionView == genreCollectionView {
             return movie?.genres?.count ?? 0
         } else {
@@ -325,4 +328,16 @@ extension DetailViewController: UICollectionViewDataSource {
         }
     }
 
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension DetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= topStackView.frame.height {
+            self.title = movieTitle
+        } else {
+            self.title = nil
+        }
+    }
 }

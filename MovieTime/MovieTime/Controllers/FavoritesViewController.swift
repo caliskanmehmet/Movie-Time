@@ -15,6 +15,8 @@ class FavoritesViewController: UIViewController {
     }
 
     let cellId = "FavoriteCollectionViewCell"
+    let posterAspectRatio = CGFloat(3.0 / 2.0)
+
     var favoriteMovies: [FavoriteMovie] = [] {
         didSet {
             favoriteCollectionView.backgroundView?.alpha = favoriteMovies.count > 0 ? 1.0 : 0.0
@@ -82,7 +84,8 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
         let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
         let space: CGFloat = (flowLayout?.minimumInteritemSpacing ?? 0.0) + (flowLayout?.sectionInset.left ?? 0.0) + (flowLayout?.sectionInset.right ?? 0.0)
         let width: CGFloat = (collectionView.frame.size.width - space) / 2.0
-        let height = width * (3 / 2)
+        let height = width * posterAspectRatio
+
         return CGSize(width: width, height: height)
     }
 

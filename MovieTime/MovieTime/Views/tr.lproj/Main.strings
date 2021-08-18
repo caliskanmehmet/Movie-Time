@@ -2,8 +2,14 @@
 /* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "5Dm-PE-hsc"; */
 "5Dm-PE-hsc.title" = "Favoriler";
 
-/* Class = "UINavigationItem"; title = "Favorite Movies"; ObjectID = "DuY-6g-c0D"; */
-"DuY-6g-c0D.title" = "Favori Filmler";
+/* Class = "UINavigationItem"; title = "Favorites"; ObjectID = "DuY-6g-c0D"; */
+"DuY-6g-c0D.title" = "Favoriler";
 
-/* Class = "UINavigationItem"; title = "Featured Movies"; ObjectID = "RQ4-1Y-TLn"; */
-"RQ4-1Y-TLn.title" = "Popüler Filmler";
+/* Class = "UINavigationItem"; title = "Featured"; ObjectID = "RQ4-1Y-TLn"; */
+"RQ4-1Y-TLn.title" = "Öne Çıkanlar";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "VlF-AE-16m"; */
+"VlF-AE-16m.title" = "Geri";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KaR-S0-eXL"; */
+"KaR-S0-eXL.title" = "Geri";
