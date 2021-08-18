@@ -86,7 +86,7 @@ class PopularViewController: UIViewController {
         let urlRequest = APIRequest.getPopularMovies(pageNumber: pageNumber)
 
         NetworkManager.shared.fetchData(urlRequest: urlRequest, type: MovieResult.self) { [weak self] response in
-            self?.tableView.tableFooterView = nil // Remove the spinner footer
+            self?.tableView.tableFooterView = UIView(frame: .zero) // Remove the spinner footer and seperators
 
             switch response {
             case .success(let result):
@@ -116,8 +116,7 @@ class PopularViewController: UIViewController {
             if isFirstSearch {
                 self?.hideSpinnerView(child: child)
             } else {
-                self?.tableView.tableFooterView = nil // Remove the spinner footer
-                self?.tableView.tableFooterView = UIView(frame: .zero) // Remove seperators for empty rows
+                self?.tableView.tableFooterView = UIView(frame: .zero) // Remove the spinner footer and seperators
             }
 
             switch response {

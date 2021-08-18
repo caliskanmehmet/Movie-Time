@@ -40,17 +40,9 @@ class MovieTableViewCell: UITableViewCell {
     }
 
     private func setLabelTexts(with movie: Movie) {
-        titleLabel.showGradientSkeleton()
-        ratingLabel.showGradientSkeleton()
-        dateLabel.showGradientSkeleton()
-
         titleLabel.text = movie.title
         dateLabel.addLeading(image: UIImage(named: "calendar") ?? UIImage(), text: " \(movie.getReleaseDate())")
         ratingLabel.text = "􀋃 \(movie.getRating())"
-
-        titleLabel.hideSkeleton()
-        ratingLabel.hideSkeleton()
-        dateLabel.hideSkeleton()
     }
 
     private func downloadAndSetPosterImage(with movie: Movie) {
