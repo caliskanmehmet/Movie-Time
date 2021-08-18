@@ -3,7 +3,6 @@
 //  MovieTime
 //
 //  Created by obss on 30.07.2021.
-//
 
 import UIKit
 
@@ -46,9 +45,9 @@ class FavoritesViewController: UIViewController {
 
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 
-extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         if favoriteMovies.count == 0 {
@@ -77,6 +76,14 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
         detailVC.movieId = favoriteMovies[indexPath.row].id
 
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout
+        let space: CGFloat = (flowLayout?.minimumInteritemSpacing ?? 0.0) + (flowLayout?.sectionInset.left ?? 0.0) + (flowLayout?.sectionInset.right ?? 0.0)
+        let width: CGFloat = (collectionView.frame.size.width - space) / 2.0
+        let height = width * (3 / 2)
+        return CGSize(width: width, height: height)
     }
 
 }

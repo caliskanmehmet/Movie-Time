@@ -4,7 +4,7 @@ excluded:
 line_length: 180
 
 identifier_name:
-  min_length: # only min_length
-    error: 3 # only error
+  allowed_symbols: "_"
+  min_length: 2
   excluded: # excluded via string array
     - id

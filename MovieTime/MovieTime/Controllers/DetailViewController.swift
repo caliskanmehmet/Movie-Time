@@ -3,7 +3,7 @@
 //  MovieTime
 //
 //  Created by obss on 2.08.2021.
-//
+//  TODO: Create a sticky header for scroll view to see movie title
 
 import UIKit
 import SafariServices
@@ -181,8 +181,8 @@ class DetailViewController: UIViewController {
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = true
 
-                let vc = SFSafariViewController(url: url, configuration: config)
-                present(vc, animated: true)
+                let viewController = SFSafariViewController(url: url, configuration: config)
+                present(viewController, animated: true)
             }
         }
     }
