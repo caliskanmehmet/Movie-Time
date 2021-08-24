@@ -53,7 +53,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var companyCollectionView: UICollectionView! {
         didSet {
             companyCollectionView.dataSource = self
-            companyCollectionView.register(UINib(nibName: companyCellId, bundle: nil), forCellWithReuseIdentifier: companyCellId)
+            companyCollectionView.register(UINib(nibName: String(describing: CompanyCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: companyCellId)
         }
     }
 
@@ -63,7 +63,7 @@ class DetailViewController: UIViewController {
     var movieId: Int?
     var movie: Movie?
     var movieTitle: String?
-    var favoriteMovies: [FavoriteMovie] = []
+    var favoriteMovies: [FavoriteMovie] = FavoriteMovieManager.shared.favoriteMovies
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +73,7 @@ class DetailViewController: UIViewController {
                                                name: .moviesChanged,
                                                object: nil)
 
-        favoriteMovies = FavoriteMovieManager.shared.favoriteMovies
+        // favoriteMovies = FavoriteMovieManager.shared.favoriteMovies
         addFavoriteButton(with: movieId)
 
         fetchMovieDetails()
