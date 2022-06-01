@@ -2,7 +2,7 @@
 //  UILabel+Extension.swift
 //  MovieTime
 //
-//  Created by obss on 31.07.2021.
+//  Created by Mehmet Caliskan on 31.07.2021.
 //
 
 import Foundation

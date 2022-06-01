@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  MovieTime
 //
-//  Created by obss on 30.07.2021.
+//  Created by Mehmet Caliskan on 30.07.2021.
 //
 
 import UIKit

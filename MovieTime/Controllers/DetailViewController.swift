@@ -2,7 +2,7 @@
 //  DetailViewController.swift
 //  MovieTime
 //
-//  Created by obss on 2.08.2021.
+//  Created by Mehmet Caliskan on 2.08.2021.
 
 import UIKit
 import SafariServices

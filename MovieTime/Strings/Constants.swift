@@ -2,7 +2,7 @@
 //  Constants.swift
 //  MovieTime
 //
-//  Created by obss on 15.08.2021.
+//  Created by Mehmet Caliskan on 15.08.2021.
 //
 
 import Foundation

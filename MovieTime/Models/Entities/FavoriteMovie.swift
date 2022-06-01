@@ -2,7 +2,7 @@
 //  FavoriteMovie.swift
 //  MovieTime
 //
-//  Created by obss on 7.08.2021.
+//  Created by Mehmet Caliskan on 7.08.2021.
 //
 
 import Foundation

@@ -2,7 +2,7 @@
 //  GenreCollectionViewCell.swift
 //  MovieTime
 //
-//  Created by obss on 4.08.2021.
+//  Created by Mehmet Caliskan on 4.08.2021.
 //
 
 import UIKit

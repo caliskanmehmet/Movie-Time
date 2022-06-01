@@ -2,7 +2,7 @@
 //  UIImageView+Extension.swift
 //  MovieTime
 //
-//  Created by obss on 18.08.2021.
+//  Created by Mehmet Caliskan on 18.08.2021.
 //
 
 import Foundation
